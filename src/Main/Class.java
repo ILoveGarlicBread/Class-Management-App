@@ -1,5 +1,5 @@
 package Main;
-public class Class extends Student{
+public class Class {
   private String ClassID;
   public Class(){}
   public Class(String ID) {

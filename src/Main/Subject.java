@@ -1,6 +1,6 @@
 package Main;
 
-public class Subject extends Student {
+public class Subject {
   private int subjectID;
   private String subjectName;
 

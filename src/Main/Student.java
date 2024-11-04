@@ -1,9 +1,6 @@
 package Main;
 
-public class Student {
-  protected String name;
-  protected String email;
-  protected String password;
+public class Student extends Person {
   protected String studentID;
 
   public Student() {
