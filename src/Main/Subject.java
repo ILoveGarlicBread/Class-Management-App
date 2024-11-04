@@ -13,7 +13,6 @@ public class Subject {
   }
 
   public void addSubject(int ID, String name) {
-    // Add subject in database
   }
 
   public void deleteSubject(int ID) {
