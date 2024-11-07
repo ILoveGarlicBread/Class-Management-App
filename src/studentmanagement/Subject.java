@@ -1,4 +1,4 @@
-package Main;
+package studentmanagement;
 
 public class Subject {
   private int subjectID;
@@ -13,7 +13,6 @@ public class Subject {
   }
 
   public void addSubject(int ID, String name) {
-    // Add subject in database
   }
 
   public void deleteSubject(int ID) {

@@ -1,4 +1,4 @@
-package Main;
+package studentmanagement;
 
 public class Person {
   protected String name;
@@ -17,7 +17,6 @@ public class Person {
   };
 
   public void viewInfo() {
-    // GUI integration
     System.out.println(name);
     System.out.println(ID);
     System.out.println(email);
