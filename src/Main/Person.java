@@ -17,7 +17,6 @@ public class Person {
   };
 
   public void viewInfo() {
-    // GUI integration
     System.out.println(name);
     System.out.println(ID);
     System.out.println(email);

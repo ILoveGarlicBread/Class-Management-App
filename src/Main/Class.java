@@ -1,17 +1,14 @@
 package Main;
+
 public class Class {
-  private String ClassID;
-  public Class(){}
-  public Class(String ID) {
-    this.ClassID = ID;
+  private String classID;
+  private String name;
+
+  public Class() {
   }
-  public void addClass(String ID){
-    // Add class to DB
-  }
-  public void updateClass(String ID){
-    // perform update
-  }
-  public void deleteClass(String ID){
-    // remove class from DB
+
+  public Class(String Name, String ID) {
+    this.name = Name;
+    this.classID = ID;
   }
 }
