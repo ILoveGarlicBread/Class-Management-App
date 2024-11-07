@@ -1,4 +1,4 @@
-package Main;
+package studentmanagement;
 
 public class Class {
   private String classID;

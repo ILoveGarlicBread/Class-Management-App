@@ -1,4 +1,4 @@
-package Main;
+package studentmanagement;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

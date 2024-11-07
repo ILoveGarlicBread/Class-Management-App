@@ -1,4 +1,4 @@
-package Main;
+package studentmanagement;
 
 public class Subject {
   private int subjectID;

@@ -1,4 +1,4 @@
-package Main;
+package studentmanagement;
 
 public class Student extends Person {
   protected String studentID;
