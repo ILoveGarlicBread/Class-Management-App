@@ -1,4 +1,4 @@
-package studentmanagement;
+package model;
 
 public class Subject {
   private int subjectID;
@@ -12,10 +12,4 @@ public class Subject {
     this.subjectName = name;
   }
 
-  public void addSubject(int ID, String name) {
-  }
-
-  public void deleteSubject(int ID) {
-    // Delete subject in database
-  }
 }

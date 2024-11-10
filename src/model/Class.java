@@ -1,4 +1,4 @@
-package studentmanagement;
+package model;
 
 public class Class {
   private String classID;

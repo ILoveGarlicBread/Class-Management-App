@@ -6,9 +6,9 @@ public class DBdemo {
   public static void Connection() {
 
     try {
-      String url = "jdbc:mysql://localhost:3306/test";
-      String user = "root";
-      String password = "garlicbread";
+      final String url = "jdbc:mysql://localhost:3306/test";
+      final String user = "root";
+      final String password = "garlicbread";
       Connection conn = DriverManager.getConnection(url, user, password);
       System.out.println("Connection successful!");
       Statement stmt = conn.createStatement();

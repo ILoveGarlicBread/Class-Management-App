@@ -1,4 +1,4 @@
-package studentmanagement;
+package model;
 
 public class Teacher extends Person {
 
