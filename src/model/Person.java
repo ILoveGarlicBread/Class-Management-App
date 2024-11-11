@@ -16,16 +16,27 @@ public class Person {
     this.ID = ID;
   };
 
-  public void viewInfo() {
-    System.out.println(name);
-    System.out.println(ID);
-    System.out.println(email);
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public void updateInfo(String name, String ID, String email) {
-    this.name = name;
-    this.email = email;
+  public void setID(String ID) {
     this.ID = ID;
   }
 
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public String getID() {
+    return ID;
+  }
+
+  public String getEmail() {
+    return email;
+  }
 }
