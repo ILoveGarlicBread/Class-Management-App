@@ -6,32 +6,34 @@ public class Student extends Person {
   public Student() {
   }
 
-  public Student(String name, String ID, String email, String password) {
+  public Student(String name, String ID, String email) {
     this.name = name;
     this.studentID = ID;
     this.email = email;
-    this.password = password;
   }
 
-  public void viewInfo() {
-    // GUI integration
-    System.out.println(name);
-    System.out.println(studentID);
-    System.out.println(email);
-  }
-
-  public void updateInfo(String name, String ID, String email) {
+  public void setName(String name) {
     this.name = name;
+  }
+
+  public void setID(String ID) {
+    this.ID = ID;
+  }
+
+  public void setEmail(String email) {
     this.email = email;
-    this.studentID = ID;
   }
 
-  public void addStudentDB(String name, String ID, String email) {
-    // Database integration
+  public String getName() {
+    return name;
   }
 
-  public void deleteStudentDB(String name, String ID) {
-    // Database integration
+  public String getID() {
+    return ID;
+  }
+
+  public String getEmail() {
+    return email;
   }
 
 }
