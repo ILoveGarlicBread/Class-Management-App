@@ -1,6 +1,6 @@
-package Main;
+package model;
 
-public class ScoreReport extends Student {
+public class ScoreReport {
   private double score;
 
   ScoreReport() {
