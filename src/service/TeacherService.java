@@ -1,13 +1,16 @@
 package service;
 
 import dao.TeacherDAO;
+import dao.impl.TeacherDAOImpl;
 import model.Teacher;
 
 public class TeacherService {
   private TeacherDAO teacherDAO;
 
-  public TeacherService(TeacherDAO teacherDAO) {
-    this.teacherDAO = teacherDAO;
+  public TeacherService() {
+    teacherDAO = new TeacherDAOImpl() {
+
+    };
   }
 
   public void addTeacher(Teacher teacher) {
@@ -22,4 +25,7 @@ public class TeacherService {
     teacherDAO.deleteTeacher(teacher);
   }
 
+  public Teacher authenticateTeacher(String email, String password) {
+    return teacherDAO.authenticateTeacher(email, password);
+  }
 }

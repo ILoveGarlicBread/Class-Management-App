@@ -9,4 +9,6 @@ public interface TeacherDAO {
   void updateTeacher(Teacher teacher);
 
   void deleteTeacher(Teacher teacher);
+
+  Teacher authenticateTeacher(String email, String password);
 }
