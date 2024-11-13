@@ -5,7 +5,8 @@
 package view;
 
 
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import view.roundedBorder;
 import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.UIManager;
@@ -22,6 +23,16 @@ public class Main extends javax.swing.JFrame {
   public Main() {
     initComponents();
   }
+  LocalDate dateObj = LocalDate.now();
+  DateTimeFormatter dayFormat = DateTimeFormatter.ofPattern("dd");
+  DateTimeFormatter monthFormat = DateTimeFormatter.ofPattern("MMM");
+  public String dayTime(){
+      return dateObj.format(dayFormat);
+  }
+  public String monthTime(){
+      return dateObj.format(monthFormat);
+  }
+  
 
   /**
    * This method is called from within the constructor to initialize the form.
@@ -47,10 +58,13 @@ public class Main extends javax.swing.JFrame {
         topPanel = new javax.swing.JPanel();
         mainPanel = new javax.swing.JPanel();
         datePanel = new javax.swing.JPanel();
+        dayLabel = new javax.swing.JLabel();
+        monthLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
+        setResizable(false);
 
         sidePanel.setBackground(new java.awt.Color(46, 52, 64));
 
@@ -200,15 +214,33 @@ public class Main extends javax.swing.JFrame {
 
         datePanel.setBackground(new java.awt.Color(46, 52, 64));
 
+        dayLabel.setFont(new java.awt.Font("Roboto Black", 1, 36)); // NOI18N
+        dayLabel.setForeground(new java.awt.Color(229, 233, 240));
+        dayLabel.setText("12");
+
+        monthLabel.setFont(new java.awt.Font("Roboto Black", 1, 36)); // NOI18N
+        monthLabel.setForeground(new java.awt.Color(136, 192, 208));
+        monthLabel.setText("Nov");
+
         javax.swing.GroupLayout datePanelLayout = new javax.swing.GroupLayout(datePanel);
         datePanel.setLayout(datePanelLayout);
         datePanelLayout.setHorizontalGroup(
             datePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 269, Short.MAX_VALUE)
+            .addGroup(datePanelLayout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(dayLabel)
+                .addGap(18, 18, 18)
+                .addComponent(monthLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         datePanelLayout.setVerticalGroup(
             datePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 179, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, datePanelLayout.createSequentialGroup()
+                .addContainerGap(86, Short.MAX_VALUE)
+                .addGroup(datePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(dayLabel)
+                    .addComponent(monthLabel))
+                .addGap(70, 70, 70))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -225,7 +257,7 @@ public class Main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1095, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(datePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -273,7 +305,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton classesButton;
     private javax.swing.JButton dashboardButton;
     private javax.swing.JPanel datePanel;
+    private javax.swing.JLabel dayLabel;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JLabel monthLabel;
     private javax.swing.JButton reportButton;
     private javax.swing.JButton settingsButton;
     private javax.swing.JPanel sidePanel;

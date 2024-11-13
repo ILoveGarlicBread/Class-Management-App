@@ -1,15 +1,31 @@
 package model;
 
 public class Subject {
-  private int subjectID;
+  private String subjectID;
   private String subjectName;
 
   public Subject() {
   };
 
-  public Subject(int ID, String name) {
+  public Subject(String ID, String name) {
     this.subjectID = ID;
     this.subjectName = name;
+  }
+
+  public String getName() {
+    return subjectName;
+  }
+
+  public String getID() {
+    return subjectID;
+  }
+
+  public void setName(String name) {
+    this.subjectName = name;
+  }
+
+  public void setID(String ID) {
+    this.subjectID = ID;
   }
 
 }

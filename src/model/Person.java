@@ -4,12 +4,12 @@ public class Person {
   protected String name;
   protected String email;
   protected String password;
-  protected String ID;
+  protected int ID;
 
   Person() {
   };
 
-  Person(String name, String email, String password, String ID) {
+  Person(String name, String email, String password, int ID) {
     this.name = name;
     this.name = email;
     this.password = password;
@@ -20,7 +20,7 @@ public class Person {
     this.name = name;
   }
 
-  public void setID(String ID) {
+  public void setID(int ID) {
     this.ID = ID;
   }
 
@@ -32,7 +32,7 @@ public class Person {
     return name;
   }
 
-  public String getID() {
+  public int getID() {
     return ID;
   }
 

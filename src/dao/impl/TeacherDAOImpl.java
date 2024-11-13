@@ -1,8 +1,6 @@
 package dao.impl;
 
 import java.sql.*;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import database.Database;
 import dao.TeacherDAO;
 import model.Teacher;
@@ -21,7 +19,7 @@ public class TeacherDAOImpl implements TeacherDAO {
         if (result.next()) {
           return new Teacher(
               result.getString("name"),
-              result.getString("ID"),
+              result.getInt("id"),
               result.getString("email"),
               result.getString("password"));
         }
@@ -42,7 +40,7 @@ public class TeacherDAOImpl implements TeacherDAO {
         PreparedStatement stmt = connection.prepareStatement(query)) {
 
       stmt.setString(1, teacher.getName());
-      stmt.setString(2, teacher.getID());
+      stmt.setInt(2, teacher.getID());
       stmt.setString(3, teacher.getEmail());
       stmt.setString(4, teacher.getPassword());
       stmt.executeUpdate();
@@ -58,7 +56,7 @@ public class TeacherDAOImpl implements TeacherDAO {
     try (Connection connection = Database.getConnection();
         PreparedStatement stmt = connection.prepareStatement(query)) {
       stmt.setString(1, teacher.getName());
-      stmt.setString(2, teacher.getID());
+      stmt.setInt(2, teacher.getID());
       stmt.setString(3, teacher.getEmail());
       stmt.setString(4, teacher.getPassword());
       stmt.executeUpdate();
@@ -75,7 +73,7 @@ public class TeacherDAOImpl implements TeacherDAO {
     try (Connection connection = Database.getConnection();
 
         PreparedStatement stmt = connection.prepareStatement(query)) {
-      stmt.setString(1, teacher.getID());
+      stmt.setInt(1, teacher.getID());
       stmt.executeUpdate();
       connection.close();
     } catch (SQLException e) {

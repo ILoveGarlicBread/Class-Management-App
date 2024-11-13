@@ -1,14 +1,13 @@
 package model;
 
 public class Student extends Person {
-  protected String studentID;
 
   public Student() {
   }
 
-  public Student(String name, String ID, String email) {
+  public Student(String name, int ID, String email) {
     this.name = name;
-    this.studentID = ID;
+    this.ID = ID;
     this.email = email;
   }
 
