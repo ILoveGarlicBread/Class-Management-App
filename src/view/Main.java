@@ -51,27 +51,33 @@ public class Main extends javax.swing.JFrame {
         studentButton = new javax.swing.JButton();
         reportButton = new javax.swing.JButton();
         classesButton = new javax.swing.JButton();
-        calenderButton = new javax.swing.JButton();
         accountButton = new javax.swing.JButton();
         settingsButton = new javax.swing.JButton();
         dashboardButton = new javax.swing.JButton();
-        topPanel = new javax.swing.JPanel();
-        mainPanel = new javax.swing.JPanel();
         datePanel = new javax.swing.JPanel();
         dayLabel = new javax.swing.JLabel();
         monthLabel = new javax.swing.JLabel();
+        mainPanel = new javax.swing.JTabbedPane();
+        dashboardPanel = new javax.swing.JPanel();
+        studentsPanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        studentTable = new javax.swing.JTable();
+        classesPanel = new javax.swing.JPanel();
+        reportPanel = new javax.swing.JPanel();
+        accountPanel = new javax.swing.JPanel();
+        settingPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
         setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         sidePanel.setBackground(new java.awt.Color(46, 52, 64));
 
-        studentButton.setBackground(new java.awt.Color(191, 97, 106));
+        studentButton.setBackground(new java.awt.Color(46, 52, 64));
         studentButton.setFont(new java.awt.Font("Roboto", 1, 19)); // NOI18N
-        studentButton.setForeground(new java.awt.Color(46, 52, 64));
-        studentButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/graduation.png"))); // NOI18N
+        studentButton.setForeground(new java.awt.Color(229, 233, 240));
         studentButton.setText("Students");
         studentButton.setBorder(new roundedBorder(30));
         studentButton.setBorderPainted(false);
@@ -84,86 +90,95 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        reportButton.setBackground(new java.awt.Color(235, 203, 139));
+        reportButton.setBackground(new java.awt.Color(46, 52, 64));
         reportButton.setFont(new java.awt.Font("Roboto", 1, 19)); // NOI18N
-        reportButton.setForeground(new java.awt.Color(46, 52, 64));
-        reportButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/report.png"))); // NOI18N
+        reportButton.setForeground(new java.awt.Color(229, 233, 240));
         reportButton.setText("Report");
         reportButton.setBorder(new roundedBorder(30));
         reportButton.setBorderPainted(false);
         reportButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         reportButton.setIconTextGap(15);
+        reportButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportButtonActionPerformed(evt);
+            }
+        });
 
-        classesButton.setBackground(new java.awt.Color(208, 135, 112));
+        classesButton.setBackground(new java.awt.Color(46, 52, 64));
         classesButton.setFont(new java.awt.Font("Roboto", 1, 19)); // NOI18N
-        classesButton.setForeground(new java.awt.Color(46, 52, 64));
-        classesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/profile.png"))); // NOI18N
+        classesButton.setForeground(new java.awt.Color(229, 233, 240));
         classesButton.setText("Classes");
         classesButton.setBorder(new roundedBorder(30));
         classesButton.setBorderPainted(false);
         classesButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         classesButton.setIconTextGap(15);
+        classesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                classesButtonActionPerformed(evt);
+            }
+        });
 
-        calenderButton.setBackground(new java.awt.Color(163, 190, 140));
-        calenderButton.setFont(new java.awt.Font("Roboto", 1, 19)); // NOI18N
-        calenderButton.setForeground(new java.awt.Color(46, 52, 64));
-        calenderButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/calendar.png"))); // NOI18N
-        calenderButton.setText("Calender");
-        calenderButton.setBorder(new roundedBorder(30));
-        calenderButton.setBorderPainted(false);
-        calenderButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        calenderButton.setIconTextGap(15);
-
-        accountButton.setBackground(new java.awt.Color(180, 142, 173));
+        accountButton.setBackground(new java.awt.Color(46, 52, 64));
         accountButton.setFont(new java.awt.Font("Roboto", 1, 19)); // NOI18N
-        accountButton.setForeground(new java.awt.Color(46, 52, 64));
-        accountButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/user.png"))); // NOI18N
+        accountButton.setForeground(new java.awt.Color(229, 233, 240));
         accountButton.setText("Account");
         accountButton.setBorder(new roundedBorder(30));
         accountButton.setBorderPainted(false);
         accountButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         accountButton.setIconTextGap(15);
+        accountButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                accountButtonActionPerformed(evt);
+            }
+        });
 
-        settingsButton.setBackground(new java.awt.Color(143, 188, 187));
+        settingsButton.setBackground(new java.awt.Color(46, 52, 64));
         settingsButton.setFont(new java.awt.Font("Roboto", 1, 19)); // NOI18N
-        settingsButton.setForeground(new java.awt.Color(46, 52, 64));
-        settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/setting.png"))); // NOI18N
+        settingsButton.setForeground(new java.awt.Color(229, 233, 240));
         settingsButton.setText("Settings");
         settingsButton.setBorder(new roundedBorder(30));
         settingsButton.setBorderPainted(false);
         settingsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         settingsButton.setIconTextGap(15);
+        settingsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsButtonActionPerformed(evt);
+            }
+        });
 
-        dashboardButton.setBackground(new java.awt.Color(129, 161, 193));
+        dashboardButton.setBackground(new java.awt.Color(59, 66, 81));
         dashboardButton.setFont(new java.awt.Font("Roboto", 1, 19)); // NOI18N
-        dashboardButton.setForeground(new java.awt.Color(46, 52, 64));
-        dashboardButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/dashboard.png"))); // NOI18N
+        dashboardButton.setForeground(new java.awt.Color(229, 233, 240));
         dashboardButton.setText("Dashboard");
         dashboardButton.setBorder(new roundedBorder(30));
         dashboardButton.setBorderPainted(false);
         dashboardButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         dashboardButton.setIconTextGap(15);
+        dashboardButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dashboardButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout sidePanelLayout = new javax.swing.GroupLayout(sidePanel);
         sidePanel.setLayout(sidePanelLayout);
         sidePanelLayout.setHorizontalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sidePanelLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(dashboardButton, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(studentButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(reportButton, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                        .addComponent(classesButton, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                        .addComponent(calenderButton, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                        .addComponent(accountButton, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                        .addComponent(settingsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(accountButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(reportButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(classesButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(studentButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dashboardButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                    .addComponent(settingsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         sidePanelLayout.setVerticalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sidePanelLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
                 .addComponent(dashboardButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(studentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -172,104 +187,228 @@ public class Main extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(reportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(calenderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(accountButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1562, Short.MAX_VALUE))
-        );
-
-        topPanel.setBackground(new java.awt.Color(67, 76, 94));
-
-        mainPanel.setBackground(new java.awt.Color(67, 76, 94));
-
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1033, Short.MAX_VALUE)
-        );
-        mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1077, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
-        topPanel.setLayout(topPanelLayout);
-        topPanelLayout.setHorizontalGroup(
-            topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        topPanelLayout.setVerticalGroup(
-            topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
-                .addContainerGap(64, Short.MAX_VALUE)
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+
+        getContentPane().add(sidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 199, 220, 670));
 
         datePanel.setBackground(new java.awt.Color(46, 52, 64));
 
         dayLabel.setFont(new java.awt.Font("Roboto Black", 1, 36)); // NOI18N
         dayLabel.setForeground(new java.awt.Color(229, 233, 240));
-        dayLabel.setText("12");
+        dayLabel.setText(dateObj.format(dayFormat));
 
         monthLabel.setFont(new java.awt.Font("Roboto Black", 1, 36)); // NOI18N
         monthLabel.setForeground(new java.awt.Color(136, 192, 208));
-        monthLabel.setText("Nov");
+        monthLabel.setText(dateObj.format(monthFormat));
 
         javax.swing.GroupLayout datePanelLayout = new javax.swing.GroupLayout(datePanel);
         datePanel.setLayout(datePanelLayout);
         datePanelLayout.setHorizontalGroup(
             datePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(datePanelLayout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addComponent(dayLabel)
+                .addGap(30, 30, 30)
+                .addComponent(dayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(monthLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(monthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         datePanelLayout.setVerticalGroup(
             datePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, datePanelLayout.createSequentialGroup()
-                .addContainerGap(86, Short.MAX_VALUE)
+            .addGroup(datePanelLayout.createSequentialGroup()
+                .addGap(62, 62, 62)
                 .addGroup(datePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dayLabel)
                     .addComponent(monthLabel))
-                .addGap(70, 70, 70))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(sidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(datePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        getContentPane().add(datePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, -1));
+
+        mainPanel.setBackground(new java.awt.Color(76, 86, 106));
+
+        dashboardPanel.setBackground(new java.awt.Color(76, 86, 106));
+
+        javax.swing.GroupLayout dashboardPanelLayout = new javax.swing.GroupLayout(dashboardPanel);
+        dashboardPanel.setLayout(dashboardPanelLayout);
+        dashboardPanelLayout.setHorizontalGroup(
+            dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1060, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(datePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(sidePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        dashboardPanelLayout.setVerticalGroup(
+            dashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 886, Short.MAX_VALUE)
         );
+
+        mainPanel.addTab("tab1", dashboardPanel);
+
+        studentsPanel.setBackground(new java.awt.Color(76, 86, 106));
+
+        studentTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Name", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(studentTable);
+
+        javax.swing.GroupLayout studentsPanelLayout = new javax.swing.GroupLayout(studentsPanel);
+        studentsPanel.setLayout(studentsPanelLayout);
+        studentsPanelLayout.setHorizontalGroup(
+            studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(studentsPanelLayout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 944, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(55, Short.MAX_VALUE))
+        );
+        studentsPanelLayout.setVerticalGroup(
+            studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(studentsPanelLayout.createSequentialGroup()
+                .addGap(169, 169, 169)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(245, Short.MAX_VALUE))
+        );
+
+        mainPanel.addTab("tab2", studentsPanel);
+
+        classesPanel.setBackground(new java.awt.Color(76, 86, 106));
+
+        javax.swing.GroupLayout classesPanelLayout = new javax.swing.GroupLayout(classesPanel);
+        classesPanel.setLayout(classesPanelLayout);
+        classesPanelLayout.setHorizontalGroup(
+            classesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1060, Short.MAX_VALUE)
+        );
+        classesPanelLayout.setVerticalGroup(
+            classesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 886, Short.MAX_VALUE)
+        );
+
+        mainPanel.addTab("tab3", classesPanel);
+
+        reportPanel.setBackground(new java.awt.Color(76, 86, 106));
+
+        javax.swing.GroupLayout reportPanelLayout = new javax.swing.GroupLayout(reportPanel);
+        reportPanel.setLayout(reportPanelLayout);
+        reportPanelLayout.setHorizontalGroup(
+            reportPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1060, Short.MAX_VALUE)
+        );
+        reportPanelLayout.setVerticalGroup(
+            reportPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 886, Short.MAX_VALUE)
+        );
+
+        mainPanel.addTab("tab4", reportPanel);
+
+        accountPanel.setBackground(new java.awt.Color(76, 86, 106));
+
+        javax.swing.GroupLayout accountPanelLayout = new javax.swing.GroupLayout(accountPanel);
+        accountPanel.setLayout(accountPanelLayout);
+        accountPanelLayout.setHorizontalGroup(
+            accountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1060, Short.MAX_VALUE)
+        );
+        accountPanelLayout.setVerticalGroup(
+            accountPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 886, Short.MAX_VALUE)
+        );
+
+        mainPanel.addTab("tab6", accountPanel);
+
+        settingPanel.setBackground(new java.awt.Color(76, 86, 106));
+
+        javax.swing.GroupLayout settingPanelLayout = new javax.swing.GroupLayout(settingPanel);
+        settingPanel.setLayout(settingPanelLayout);
+        settingPanelLayout.setHorizontalGroup(
+            settingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1060, Short.MAX_VALUE)
+        );
+        settingPanelLayout.setVerticalGroup(
+            settingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 886, Short.MAX_VALUE)
+        );
+
+        mainPanel.addTab("tab7", settingPanel);
+
+        getContentPane().add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, -62, 1060, 930));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    private void dashboardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashboardButtonActionPerformed
+        // TODO add your handling code here:
+       mainPanel.setSelectedIndex(0);
+       dashboardButton.setBackground(new java.awt.Color(59, 66, 81));
+       studentButton.setBackground(new java.awt.Color(46, 52, 64));
+       classesButton.setBackground(new java.awt.Color(46, 52, 64));
+       accountButton.setBackground(new java.awt.Color(46, 52, 64));
+       settingsButton.setBackground(new java.awt.Color(46, 52, 64));
+       reportButton.setBackground(new java.awt.Color(46, 52, 64));
+    }//GEN-LAST:event_dashboardButtonActionPerformed
 
-  private void studentButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_studentButtonActionPerformed
-    // TODO add your handling code here:
-  }// GEN-LAST:event_studentButtonActionPerformed
+    private void classesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classesButtonActionPerformed
+        // TODO add your handling code here:
+       mainPanel.setSelectedIndex(2);
+       dashboardButton.setBackground(new java.awt.Color(46, 52, 64));
+       studentButton.setBackground(new java.awt.Color(46, 52, 64));
+       classesButton.setBackground(new java.awt.Color(59, 66, 81));
+       accountButton.setBackground(new java.awt.Color(46, 52, 64));
+       settingsButton.setBackground(new java.awt.Color(46, 52, 64));
+       reportButton.setBackground(new java.awt.Color(46, 52, 64));
+    }//GEN-LAST:event_classesButtonActionPerformed
+
+    private void reportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportButtonActionPerformed
+        // TODO add your handling code here:
+        mainPanel.setSelectedIndex(3);
+        dashboardButton.setBackground(new java.awt.Color(46, 52, 64));
+       studentButton.setBackground(new java.awt.Color(46, 52, 64));
+       reportButton.setBackground(new java.awt.Color(59, 66, 81));
+       accountButton.setBackground(new java.awt.Color(46, 52, 64));
+       settingsButton.setBackground(new java.awt.Color(46, 52, 64));
+       classesButton.setBackground(new java.awt.Color(46, 52, 64));
+    }//GEN-LAST:event_reportButtonActionPerformed
+
+    private void accountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountButtonActionPerformed
+        // TODO add your handling code here:
+        mainPanel.setSelectedIndex(4);
+        dashboardButton.setBackground(new java.awt.Color(46, 52, 64));
+       studentButton.setBackground(new java.awt.Color(46, 52, 64));
+       accountButton.setBackground(new java.awt.Color(59, 66, 81));
+       classesButton.setBackground(new java.awt.Color(46, 52, 64));
+       settingsButton.setBackground(new java.awt.Color(46, 52, 64));
+       reportButton.setBackground(new java.awt.Color(46, 52, 64));
+    }//GEN-LAST:event_accountButtonActionPerformed
+
+    private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
+        // TODO add your handling code here:
+        mainPanel.setSelectedIndex(5);
+        dashboardButton.setBackground(new java.awt.Color(46, 52, 64));
+       studentButton.setBackground(new java.awt.Color(46, 52, 64));
+       settingsButton.setBackground(new java.awt.Color(59, 66, 81));
+       accountButton.setBackground(new java.awt.Color(46, 52, 64));
+       classesButton.setBackground(new java.awt.Color(46, 52, 64));
+       reportButton.setBackground(new java.awt.Color(46, 52, 64));
+    }//GEN-LAST:event_settingsButtonActionPerformed
+
+    private void studentButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_studentButtonActionPerformed
+        mainPanel.setSelectedIndex(1);
+        dashboardButton.setBackground(new java.awt.Color(46, 52, 64));
+       classesButton.setBackground(new java.awt.Color(46, 52, 64));
+       studentButton.setBackground(new java.awt.Color(59, 66, 81));
+       accountButton.setBackground(new java.awt.Color(46, 52, 64));
+       settingsButton.setBackground(new java.awt.Color(46, 52, 64));
+       reportButton.setBackground(new java.awt.Color(46, 52, 64));
+        
+    }// GEN-LAST:event_studentButtonActionPerformed
 
   /**
    * @param args the command line arguments
@@ -301,17 +440,23 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton accountButton;
-    private javax.swing.JButton calenderButton;
+    private javax.swing.JPanel accountPanel;
     private javax.swing.JButton classesButton;
+    private javax.swing.JPanel classesPanel;
     private javax.swing.JButton dashboardButton;
+    private javax.swing.JPanel dashboardPanel;
     private javax.swing.JPanel datePanel;
     private javax.swing.JLabel dayLabel;
-    private javax.swing.JPanel mainPanel;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane mainPanel;
     private javax.swing.JLabel monthLabel;
     private javax.swing.JButton reportButton;
+    private javax.swing.JPanel reportPanel;
+    private javax.swing.JPanel settingPanel;
     private javax.swing.JButton settingsButton;
     private javax.swing.JPanel sidePanel;
     private javax.swing.JButton studentButton;
-    private javax.swing.JPanel topPanel;
+    private javax.swing.JTable studentTable;
+    private javax.swing.JPanel studentsPanel;
     // End of variables declaration//GEN-END:variables
 }
