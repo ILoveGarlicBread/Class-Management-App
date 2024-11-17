@@ -7,8 +7,10 @@ import java.util.List;
 public class ClassService {
     private ClassDAO classDAO;
 
-  public ClassService(ClassDAO classDAO) {
-    this.classDAO = classDAO;
+  public ClassService() {
+    classDAO= new ClassDAOImpl(){
+    
+    };
   }
 
   public List<Class> listAll() {
