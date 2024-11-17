@@ -4,12 +4,14 @@
  */
 package view;
 
-
+import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import view.roundedBorder;
 import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.UIManager;
+import controller.*;
+
 
 /**
  *
@@ -31,6 +33,10 @@ public class Main extends javax.swing.JFrame {
   }
   public String monthTime(){
       return dateObj.format(monthFormat);
+  }
+  public void loadStudentData(){
+      StudentController studentcontroller = new StudentController();
+      studentcontroller.loadStudentTable(studentTable);
   }
   
 
@@ -62,6 +68,7 @@ public class Main extends javax.swing.JFrame {
         studentsPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         studentTable = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
         reportPanel = new javax.swing.JPanel();
         accountPanel = new javax.swing.JPanel();
         settingPanel = new javax.swing.JPanel();
@@ -81,7 +88,6 @@ public class Main extends javax.swing.JFrame {
         studentButton.setFont(new java.awt.Font("Roboto", 1, 19)); // NOI18N
         studentButton.setForeground(new java.awt.Color(229, 233, 240));
         studentButton.setText("Students");
-        studentButton.setBorder(new roundedBorder(30));
         studentButton.setBorderPainted(false);
         studentButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         studentButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -96,7 +102,6 @@ public class Main extends javax.swing.JFrame {
         reportButton.setFont(new java.awt.Font("Roboto", 1, 19)); // NOI18N
         reportButton.setForeground(new java.awt.Color(229, 233, 240));
         reportButton.setText("Report");
-        reportButton.setBorder(new roundedBorder(30));
         reportButton.setBorderPainted(false);
         reportButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         reportButton.setIconTextGap(15);
@@ -110,7 +115,6 @@ public class Main extends javax.swing.JFrame {
         classesButton.setFont(new java.awt.Font("Roboto", 1, 19)); // NOI18N
         classesButton.setForeground(new java.awt.Color(229, 233, 240));
         classesButton.setText("Classes");
-        classesButton.setBorder(new roundedBorder(30));
         classesButton.setBorderPainted(false);
         classesButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         classesButton.setIconTextGap(15);
@@ -124,7 +128,6 @@ public class Main extends javax.swing.JFrame {
         accountButton.setFont(new java.awt.Font("Roboto", 1, 19)); // NOI18N
         accountButton.setForeground(new java.awt.Color(229, 233, 240));
         accountButton.setText("Account");
-        accountButton.setBorder(new roundedBorder(30));
         accountButton.setBorderPainted(false);
         accountButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         accountButton.setIconTextGap(15);
@@ -138,7 +141,6 @@ public class Main extends javax.swing.JFrame {
         settingsButton.setFont(new java.awt.Font("Roboto", 1, 19)); // NOI18N
         settingsButton.setForeground(new java.awt.Color(229, 233, 240));
         settingsButton.setText("Settings");
-        settingsButton.setBorder(new roundedBorder(30));
         settingsButton.setBorderPainted(false);
         settingsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         settingsButton.setIconTextGap(15);
@@ -152,7 +154,6 @@ public class Main extends javax.swing.JFrame {
         dashboardButton.setFont(new java.awt.Font("Roboto", 1, 19)); // NOI18N
         dashboardButton.setForeground(new java.awt.Color(229, 233, 240));
         dashboardButton.setText("Dashboard");
-        dashboardButton.setBorder(new roundedBorder(30));
         dashboardButton.setBorderPainted(false);
         dashboardButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         dashboardButton.setIconTextGap(15);
@@ -201,7 +202,7 @@ public class Main extends javax.swing.JFrame {
 
         dayLabel.setFont(new java.awt.Font("Roboto Black", 1, 36)); // NOI18N
         dayLabel.setForeground(new java.awt.Color(229, 233, 240));
-        dayLabel.setText(dateObj.format(dayFormat));
+        dayLabel.setText(LocalDate.now().format(dayFormat));
 
         monthLabel.setFont(new java.awt.Font("Roboto Black", 1, 36)); // NOI18N
         monthLabel.setForeground(new java.awt.Color(136, 192, 208));
@@ -212,11 +213,11 @@ public class Main extends javax.swing.JFrame {
         datePanelLayout.setHorizontalGroup(
             datePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(datePanelLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addContainerGap(46, Short.MAX_VALUE)
                 .addComponent(dayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(monthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addGap(43, 43, 43))
         );
         datePanelLayout.setVerticalGroup(
             datePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,30 +253,43 @@ public class Main extends javax.swing.JFrame {
         jScrollPane1.setForeground(new java.awt.Color(153, 255, 255));
 
         studentTable.setBackground(new java.awt.Color(76, 86, 106));
-        studentTable.setForeground(new java.awt.Color(46,52, 64));
+        studentTable.setForeground(new java.awt.Color(229, 233, 240));
         studentTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Name", "ID", "Class", "email"
+                "Name", "ID", "email"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        studentTable.setGridColor(new java.awt.Color(46, 52, 64));
+        studentTable.setFocusable(false);
+        studentTable.setGridColor(new java.awt.Color(229, 233, 240));
         studentTable.getTableHeader().setBackground(new java.awt.Color(46, 52, 64));
         studentTable.getTableHeader().setForeground(new java.awt.Color(229, 233, 240));
 
         studentTable.setGridColor(new java.awt.Color(46, 52, 64));
+        studentTable.setSelectionBackground(new java.awt.Color(229, 233, 240));
         studentTable.setSelectionForeground(new java.awt.Color(46, 52, 64));
+        studentTable.setShowGrid(true);
         jScrollPane1.setViewportView(studentTable);
+
+        jButton1.setBackground(new java.awt.Color(46, 52, 64));
+        jButton1.setForeground(new java.awt.Color(229, 233, 240));
+        jButton1.setText("Refresh");
+        jButton1.setBorderPainted(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout studentsPanelLayout = new javax.swing.GroupLayout(studentsPanel);
         studentsPanel.setLayout(studentsPanelLayout);
@@ -283,13 +297,17 @@ public class Main extends javax.swing.JFrame {
             studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(studentsPanelLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 997, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 997, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         studentsPanelLayout.setVerticalGroup(
             studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(studentsPanelLayout.createSequentialGroup()
-                .addGap(162, 162, 162)
+                .addGap(125, 125, 125)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(175, Short.MAX_VALUE))
         );
@@ -440,6 +458,10 @@ public class Main extends javax.swing.JFrame {
        reportButton.setBackground(new java.awt.Color(46, 52, 64));
     }//GEN-LAST:event_settingsButtonActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        loadStudentData();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void studentButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_studentButtonActionPerformed
         mainPanel.setSelectedIndex(1);
         dashboardButton.setBackground(new java.awt.Color(46, 52, 64));
@@ -489,6 +511,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel dashboardPanel;
     private javax.swing.JPanel datePanel;
     private javax.swing.JLabel dayLabel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane mainPanel;

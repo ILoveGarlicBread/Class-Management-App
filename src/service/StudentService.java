@@ -2,13 +2,14 @@ package service;
 
 import dao.StudentDAO;
 import model.Student;
+import dao.impl.StudentDAOImpl;
 import java.util.List;
 
 public class StudentService {
   private StudentDAO studentDAO;
 
-  public StudentService(StudentDAO studentDAO) {
-    this.studentDAO = studentDAO;
+  public StudentService() {
+    studentDAO = new StudentDAOImpl();
   }
 
   public List<Student> listAll() {

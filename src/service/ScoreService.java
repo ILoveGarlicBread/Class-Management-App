@@ -7,16 +7,18 @@ import dao.impl.ScoreDAOImpl;
 import model.Score;
 
 public class ScoreService {
-    private ScoreDAO scoreDAO;
+  private ScoreDAO scoreDAO;
 
   public ScoreService() {
     scoreDAO = new ScoreDAOImpl() {
-    
+
     };
   }
+
   public List<Score> listAll() {
     return scoreDAO.listAllScore();
   }
+
   public void addScore(Score score) {
     scoreDAO.addScore(score);
   }

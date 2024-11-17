@@ -30,16 +30,16 @@ public class Score {
     this.reportID = reportID;
   }
 
-  public Student getstudent() {
-    return student;
+  public int getstudent() {
+    return student.ID;
   }
 
   public double getScore() {
     return score;
   }
 
-  public Subject getsubject() {
-    return subject;
+  public String getsubject() {
+    return subject.getID();
   }
 
   public void setStudent(Student student) {
