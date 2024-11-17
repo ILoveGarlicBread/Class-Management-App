@@ -8,9 +8,7 @@ public class TeacherService {
   private TeacherDAO teacherDAO;
 
   public TeacherService() {
-    teacherDAO = new TeacherDAOImpl() {
-
-    };
+    teacherDAO = new TeacherDAOImpl();
   }
 
   public void addTeacher(Teacher teacher) {

@@ -7,18 +7,20 @@ import dao.impl.SubjectDAOImpl;
 import model.Subject;
 
 public class SubjectService {
-    private SubjectDAO subjectDAO;
+  private SubjectDAO subjectDAO;
 
   public SubjectService() {
-    subjectDAO = new SubjectDAOImpl() {
-    };
+    subjectDAO = new SubjectDAOImpl();
   }
+
   public List<Subject> listAll() {
     return subjectDAO.listAllSubjects();
   }
+
   public Subject findByID(String id) {
     return subjectDAO.findByID(id);
   }
+
   public void addSubject(Subject subject) {
     subjectDAO.addSubject(subject);
   }
@@ -30,5 +32,5 @@ public class SubjectService {
   public void deleteSubject(String id) {
     subjectDAO.deleteSubject(id);
   }
-  
+
 }

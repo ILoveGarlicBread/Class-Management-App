@@ -10,9 +10,7 @@ public class ScoreService {
   private ScoreDAO scoreDAO;
 
   public ScoreService() {
-    scoreDAO = new ScoreDAOImpl() {
-
-    };
+    scoreDAO = new ScoreDAOImpl();
   }
 
   public List<Score> listAll() {

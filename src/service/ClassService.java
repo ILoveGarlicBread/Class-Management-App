@@ -1,14 +1,16 @@
 package service;
 
 import dao.ClassDAO;
+import dao.impl.ClassDAOImpl;
 import model.Class;
 import java.util.List;
 
 public class ClassService {
-    private ClassDAO classDAO;
+  private ClassDAO classDAO;
 
-  public ClassService(ClassDAO classDAO) {
-    this.classDAO = classDAO;
+  public ClassService() {
+    classDAO = new ClassDAOImpl();
+
   }
 
   public List<Class> listAll() {
