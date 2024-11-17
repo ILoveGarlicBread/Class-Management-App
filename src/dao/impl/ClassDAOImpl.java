@@ -61,8 +61,8 @@ public class ClassDAOImpl implements ClassDAO {
 
   private List<Student> getStudentsForClass(int ID, Connection connection) {
     List<Student> students = new ArrayList<>();
-    String query = "Select s.name, s.id, s.email" +
-        "From class_student cs"
+    String query = "Select s.name, s.id, s.email"
+        + "From class_student cs"
         + "Join students s on cs.student_id = s.id"
         + "where cs.class_id = ?";
     try (

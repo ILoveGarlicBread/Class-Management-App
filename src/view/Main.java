@@ -62,10 +62,12 @@ public class Main extends javax.swing.JFrame {
         studentsPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         studentTable = new javax.swing.JTable();
-        classesPanel = new javax.swing.JPanel();
         reportPanel = new javax.swing.JPanel();
         accountPanel = new javax.swing.JPanel();
         settingPanel = new javax.swing.JPanel();
+        classesPanel = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        classesTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 255));
@@ -247,17 +249,32 @@ public class Main extends javax.swing.JFrame {
 
         studentsPanel.setBackground(new java.awt.Color(76, 86, 106));
 
+        jScrollPane1.setForeground(new java.awt.Color(153, 255, 255));
+
+        studentTable.setBackground(new java.awt.Color(76, 86, 106));
+        studentTable.setForeground(new java.awt.Color(46,52, 64));
         studentTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Name", "Title 2", "Title 3", "Title 4"
+                "Name", "ID", "Class", "email"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        studentTable.setGridColor(new java.awt.Color(46, 52, 64));
+        studentTable.getTableHeader().setBackground(new java.awt.Color(46, 52, 64));
+        studentTable.getTableHeader().setForeground(new java.awt.Color(229, 233, 240));
+
+        studentTable.setGridColor(new java.awt.Color(46, 52, 64));
+        studentTable.setSelectionForeground(new java.awt.Color(46, 52, 64));
         jScrollPane1.setViewportView(studentTable);
 
         javax.swing.GroupLayout studentsPanelLayout = new javax.swing.GroupLayout(studentsPanel);
@@ -265,34 +282,19 @@ public class Main extends javax.swing.JFrame {
         studentsPanelLayout.setHorizontalGroup(
             studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(studentsPanelLayout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 944, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 997, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         studentsPanelLayout.setVerticalGroup(
             studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(studentsPanelLayout.createSequentialGroup()
-                .addGap(169, 169, 169)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(245, Short.MAX_VALUE))
+                .addGap(162, 162, 162)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(175, Short.MAX_VALUE))
         );
 
         mainPanel.addTab("tab2", studentsPanel);
-
-        classesPanel.setBackground(new java.awt.Color(76, 86, 106));
-
-        javax.swing.GroupLayout classesPanelLayout = new javax.swing.GroupLayout(classesPanel);
-        classesPanel.setLayout(classesPanelLayout);
-        classesPanelLayout.setHorizontalGroup(
-            classesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1060, Short.MAX_VALUE)
-        );
-        classesPanelLayout.setVerticalGroup(
-            classesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 886, Short.MAX_VALUE)
-        );
-
-        mainPanel.addTab("tab3", classesPanel);
 
         reportPanel.setBackground(new java.awt.Color(76, 86, 106));
 
@@ -338,6 +340,45 @@ public class Main extends javax.swing.JFrame {
         );
 
         mainPanel.addTab("tab7", settingPanel);
+
+        classesPanel.setBackground(new java.awt.Color(76, 86, 106));
+
+        classesTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Name", "Subject", "SubjectID", "Student Amount"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(classesTable);
+
+        javax.swing.GroupLayout classesPanelLayout = new javax.swing.GroupLayout(classesPanel);
+        classesPanel.setLayout(classesPanelLayout);
+        classesPanelLayout.setHorizontalGroup(
+            classesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(classesPanelLayout.createSequentialGroup()
+                .addGap(68, 68, 68)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 923, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(69, Short.MAX_VALUE))
+        );
+        classesPanelLayout.setVerticalGroup(
+            classesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(classesPanelLayout.createSequentialGroup()
+                .addGap(145, 145, 145)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(230, Short.MAX_VALUE))
+        );
+
+        mainPanel.addTab("tab3", classesPanel);
 
         getContentPane().add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, -62, 1060, 930));
 
@@ -443,11 +484,13 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel accountPanel;
     private javax.swing.JButton classesButton;
     private javax.swing.JPanel classesPanel;
+    private javax.swing.JTable classesTable;
     private javax.swing.JButton dashboardButton;
     private javax.swing.JPanel dashboardPanel;
     private javax.swing.JPanel datePanel;
     private javax.swing.JLabel dayLabel;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane mainPanel;
     private javax.swing.JLabel monthLabel;
     private javax.swing.JButton reportButton;
