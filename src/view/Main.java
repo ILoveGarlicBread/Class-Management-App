@@ -26,6 +26,8 @@ public class Main extends javax.swing.JFrame {
   public Main() {
     initComponents();
   }
+  
+  String operation = "default";
   LocalDate dateObj = LocalDate.now();
   DateTimeFormatter dayFormat = DateTimeFormatter.ofPattern("dd");
   DateTimeFormatter monthFormat = DateTimeFormatter.ofPattern("MMM");
@@ -65,7 +67,6 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
         sidePanel = new javax.swing.JPanel();
         studentButton = new javax.swing.JButton();
         reportButton = new javax.swing.JButton();
@@ -79,21 +80,24 @@ public class Main extends javax.swing.JFrame {
         mainPanel = new javax.swing.JTabbedPane();
         dashboardPanel = new javax.swing.JPanel();
         studentsPanel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        studentTableScrollPane = new javax.swing.JScrollPane();
         studentTable = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
         studentaddButton = new javax.swing.JButton();
         studentnameTextField = new javax.swing.JTextField();
         studentemailTextField = new javax.swing.JTextField();
         studentdeleteButton = new javax.swing.JButton();
         studentupdateButton = new javax.swing.JButton();
         studentsearchButton = new javax.swing.JButton();
+        studentnameLabel = new javax.swing.JLabel();
+        studentemailLabel = new javax.swing.JLabel();
+        confirmPanel = new javax.swing.JPanel();
+        studentConfirmButton = new javax.swing.JButton();
+        studentcancelButton = new javax.swing.JButton();
         reportPanel = new javax.swing.JPanel();
         accountPanel = new javax.swing.JPanel();
         settingPanel = new javax.swing.JPanel();
         classesPanel = new javax.swing.JPanel();
-
-        jTextField1.setText("jTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 255));
@@ -269,7 +273,7 @@ public class Main extends javax.swing.JFrame {
 
         studentsPanel.setBackground(new java.awt.Color(59, 66, 82));
 
-        jScrollPane1.setForeground(new java.awt.Color(153, 255, 255));
+        studentTableScrollPane.setForeground(new java.awt.Color(153, 255, 255));
 
         studentTable.setBackground(new java.awt.Color(59, 66, 82));
         studentTable.setForeground(new java.awt.Color(229, 233, 240));
@@ -284,9 +288,16 @@ public class Main extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.Integer.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                true, false, true
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         studentTable.setFocusable(false);
@@ -298,15 +309,15 @@ public class Main extends javax.swing.JFrame {
         studentTable.setSelectionBackground(new java.awt.Color(229, 233, 240));
         studentTable.setSelectionForeground(new java.awt.Color(46, 52, 64));
         studentTable.setShowGrid(true);
-        jScrollPane1.setViewportView(studentTable);
+        studentTableScrollPane.setViewportView(studentTable);
 
-        jButton1.setBackground(new java.awt.Color(76, 86, 106));
-        jButton1.setForeground(new java.awt.Color(229, 233, 240));
-        jButton1.setText("Refresh");
-        jButton1.setBorderPainted(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        refreshButton.setBackground(new java.awt.Color(76, 86, 106));
+        refreshButton.setForeground(new java.awt.Color(229, 233, 240));
+        refreshButton.setText("Refresh");
+        refreshButton.setBorderPainted(false);
+        refreshButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                refreshButtonActionPerformed(evt);
             }
         });
 
@@ -363,36 +374,101 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        studentnameLabel.setBackground(new java.awt.Color(59, 66, 82));
+        studentnameLabel.setForeground(new java.awt.Color(229, 233, 240));
+        studentnameLabel.setText("Name:");
+
+        studentemailLabel.setBackground(new java.awt.Color(59, 66, 82));
+        studentemailLabel.setForeground(new java.awt.Color(229, 233, 240));
+        studentemailLabel.setText("Email:");
+
+        confirmPanel.setBackground(new java.awt.Color(59, 66, 82));
+
+        studentConfirmButton.setBackground(new java.awt.Color(94, 129, 172));
+        studentConfirmButton.setForeground(new java.awt.Color(229, 233, 240));
+        studentConfirmButton.setText("Confirm");
+        studentConfirmButton.setBorderPainted(false);
+        studentConfirmButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentConfirmButtonActionPerformed(evt);
+            }
+        });
+
+        studentcancelButton.setBackground(new java.awt.Color(76, 86, 106));
+        studentcancelButton.setForeground(new java.awt.Color(229, 233, 240));
+        studentcancelButton.setText("Cancel");
+        studentcancelButton.setBorderPainted(false);
+        studentcancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentcancelButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout confirmPanelLayout = new javax.swing.GroupLayout(confirmPanel);
+        confirmPanel.setLayout(confirmPanelLayout);
+        confirmPanelLayout.setHorizontalGroup(
+            confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(confirmPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(studentConfirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(studentcancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        confirmPanelLayout.setVerticalGroup(
+            confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, confirmPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(studentConfirmButton)
+                    .addComponent(studentcancelButton)))
+        );
+
         javax.swing.GroupLayout studentsPanelLayout = new javax.swing.GroupLayout(studentsPanel);
         studentsPanel.setLayout(studentsPanelLayout);
         studentsPanelLayout.setHorizontalGroup(
             studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(studentsPanelLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 997, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, studentsPanelLayout.createSequentialGroup()
-                        .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(studentnameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, studentsPanelLayout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(studentupdateButton)))
+                .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(studentsPanelLayout.createSequentialGroup()
+                        .addComponent(studentTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 997, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(studentsPanelLayout.createSequentialGroup()
+                        .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(studentnameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, studentsPanelLayout.createSequentialGroup()
+                                    .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(studentupdateButton)))
+                            .addComponent(studentnameLabel))
                         .addGap(18, 18, 18)
                         .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(studentsPanelLayout.createSequentialGroup()
-                                .addComponent(studentemailTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(studentaddButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(studentsearchButton))
-                            .addComponent(studentdeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(33, Short.MAX_VALUE))
+                                .addComponent(studentemailLabel)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(studentsPanelLayout.createSequentialGroup()
+                                .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(studentsPanelLayout.createSequentialGroup()
+                                        .addComponent(studentemailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(studentaddButton)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(studentsearchButton))
+                                    .addGroup(studentsPanelLayout.createSequentialGroup()
+                                        .addComponent(studentdeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(confirmPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(33, Short.MAX_VALUE))))))
         );
         studentsPanelLayout.setVerticalGroup(
             studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(studentsPanelLayout.createSequentialGroup()
-                .addGap(64, 64, 64)
+                .addGap(35, 35, 35)
+                .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(studentnameLabel)
+                    .addComponent(studentemailLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(studentnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -400,13 +476,15 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(studentsearchButton)
                         .addComponent(studentemailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(studentupdateButton)
-                    .addComponent(studentdeleteButton))
+                .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(confirmPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(refreshButton)
+                        .addComponent(studentupdateButton)
+                        .addComponent(studentdeleteButton)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(171, Short.MAX_VALUE))
+                .addComponent(studentTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(171, 171, 171))
         );
 
         mainPanel.addTab("tab2", studentsPanel);
@@ -531,28 +609,17 @@ public class Main extends javax.swing.JFrame {
        reportButton.setBackground(new java.awt.Color(46, 52, 64));
     }//GEN-LAST:event_settingsButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         loadStudentData();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void studentsearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentsearchButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_studentsearchButtonActionPerformed
 
     private void studentaddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentaddButtonActionPerformed
-        String name = studentnameTextField.getText();
-        String email = studentemailTextField.getText();
-        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to add this student?","Confirm insert",JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);
-        if (confirm == JOptionPane.YES_OPTION){
-            boolean success = insertStudentData(name, email);
-            if(success){
-                JOptionPane.showMessageDialog(this, "Student added successfully.");
-                loadStudentData();
-            }
-            
-        } 
-        
+        confirmPanel.setVisible(true);
+        operation = "insert";
     }//GEN-LAST:event_studentaddButtonActionPerformed
 
     private void studentdeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentdeleteButtonActionPerformed
@@ -561,21 +628,9 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please select a student to delete.");
             return;
         }
-        int studentId = (int) studentTable.getValueAt(selectedRow, 1);
-        int confirm = JOptionPane.showConfirmDialog(
-                null, 
-                "Are you sure you want to delete this student?", 
-                "Confirm Delete", 
-                JOptionPane.YES_NO_OPTION
-        );
-        if (confirm == JOptionPane.YES_OPTION){
-            boolean success = deleteStudentData(studentId);
-            if(success){
-                JOptionPane.showMessageDialog(null, "Student deleted successfully.");
-                loadStudentData();
-            }
-            
-        }
+        confirmPanel.setVisible(true);
+        operation = "delete";
+        
     }//GEN-LAST:event_studentdeleteButtonActionPerformed
 
     private void studentupdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentupdateButtonActionPerformed
@@ -584,26 +639,66 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please select a student to update.");
             return;
         }
-        String studentName = (String) studentTable.getValueAt(selectedRow, 0);
-        int studentId = (int) studentTable.getValueAt(selectedRow, 1);
-        String studentEmail = (String) studentTable.getValueAt(selectedRow, 2);
-        int confirm = JOptionPane.showConfirmDialog(
-                null, 
-                "Are you sure you want to update this student info?", 
-                "Confirm Update", 
-                JOptionPane.YES_NO_OPTION
-        );
-        if (confirm == JOptionPane.YES_OPTION){
-            boolean success = updateStudentData(studentName,studentId,studentEmail);
-            if(success){
-                JOptionPane.showMessageDialog(null, "Student update successfully.");
-                loadStudentData();
-            }
-            
-        }
+        confirmPanel.setVisible(true);
+        operation = "update";
     }//GEN-LAST:event_studentupdateButtonActionPerformed
 
+    private void studentConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentConfirmButtonActionPerformed
+        if (operation == "insert") {
+            String name = studentnameTextField.getText();
+            String email = studentemailTextField.getText();
+            boolean success = insertStudentData(name, email);
+            if(success){
+                loadStudentData();
+            }
+            operation = "default";
+            confirmPanel.setVisible(false);
+            
+        }
+        
+        if (operation == "update") {
+            int selectedRow = studentTable.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(null, "Please select a student to update.");
+                return;
+            }
+            String studentName = (String) studentTable.getValueAt(selectedRow, 0);
+            int studentId = (int) studentTable.getValueAt(selectedRow, 1);
+            String studentEmail = (String) studentTable.getValueAt(selectedRow, 2);
+            boolean success = updateStudentData(studentName, studentId, studentEmail);
+            if (success) {
+                loadStudentData();
+            }
+            operation = "default";
+            confirmPanel.setVisible(false);
+            
+        }
+        if (operation == "delete") {
+            int selectedRow = studentTable.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(null, "Please select a student to update.");
+                return;
+            }
+            int studentId = (int) studentTable.getValueAt(selectedRow, 1);
+            boolean success = deleteStudentData(studentId);
+            if (success) {
+                loadStudentData();
+            }
+            operation = "default";
+            confirmPanel.setVisible(false);
+        }
+        operation = "default";
+        confirmPanel.setVisible(false);
+        
+    }//GEN-LAST:event_studentConfirmButtonActionPerformed
+
+    private void studentcancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentcancelButtonActionPerformed
+        operation = "default";
+        confirmPanel.setVisible(false);
+    }//GEN-LAST:event_studentcancelButtonActionPerformed
+
     private void studentButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_studentButtonActionPerformed
+        confirmPanel.setVisible(false);
         mainPanel.setSelectedIndex(1);
         loadStudentData();
         dashboardButton.setBackground(new java.awt.Color(46, 52, 64));
@@ -648,25 +743,29 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel accountPanel;
     private javax.swing.JButton classesButton;
     private javax.swing.JPanel classesPanel;
+    private javax.swing.JPanel confirmPanel;
     private javax.swing.JButton dashboardButton;
     private javax.swing.JPanel dashboardPanel;
     private javax.swing.JPanel datePanel;
     private javax.swing.JLabel dayLabel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTabbedPane mainPanel;
     private javax.swing.JLabel monthLabel;
+    private javax.swing.JButton refreshButton;
     private javax.swing.JButton reportButton;
     private javax.swing.JPanel reportPanel;
     private javax.swing.JPanel settingPanel;
     private javax.swing.JButton settingsButton;
     private javax.swing.JPanel sidePanel;
     private javax.swing.JButton studentButton;
+    private javax.swing.JButton studentConfirmButton;
     private javax.swing.JTable studentTable;
+    private javax.swing.JScrollPane studentTableScrollPane;
     private javax.swing.JButton studentaddButton;
+    private javax.swing.JButton studentcancelButton;
     private javax.swing.JButton studentdeleteButton;
+    private javax.swing.JLabel studentemailLabel;
     private javax.swing.JTextField studentemailTextField;
+    private javax.swing.JLabel studentnameLabel;
     private javax.swing.JTextField studentnameTextField;
     private javax.swing.JPanel studentsPanel;
     private javax.swing.JButton studentsearchButton;

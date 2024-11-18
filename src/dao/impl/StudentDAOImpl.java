@@ -13,7 +13,7 @@ public class StudentDAOImpl implements StudentDAO {
   @Override
   public List<Student> listAllStudents() {
     List<Student> students = new ArrayList<>();
-    String query = "SELECT name, id, email FROM students";
+    String query = "SELECT name, id, email FROM students order by name";
     try (Connection connection = Database.getConnection();
 
         PreparedStatement stmt = connection.prepareStatement(query);
