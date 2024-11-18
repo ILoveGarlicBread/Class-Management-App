@@ -22,4 +22,11 @@ public class StudentController {
     }
   }
 
+  public void insertStudentTable() {
+  }
+
+  public void deleteStudentTable() {
+
+  }
+
 }
