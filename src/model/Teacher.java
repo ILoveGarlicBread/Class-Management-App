@@ -1,7 +1,7 @@
 package model;
 
 public final class Teacher extends Person {
-  private final int age;
+  private final int age; //constant age
   public Teacher() {
     this.age= 0;
   };
