@@ -22,11 +22,12 @@ public class ClassDAOImpl implements ClassDAO {
       stmt.setString(3, classroom.getSubject());
       stmt.setInt(4, classroom.getTeacher());
       stmt.executeUpdate();
+
+      stmt.close();
       connection.close();
     } catch (SQLException e) {
       System.out.println("Error insert classroom");
     }
-
   }
 
   @Override
@@ -40,6 +41,8 @@ public class ClassDAOImpl implements ClassDAO {
       stmt.setInt(4, classroom.getTeacher());
       stmt.setInt(5, classroom.getID());
       stmt.executeUpdate();
+
+      stmt.close();
       connection.close();
     } catch (SQLException e) {
       System.out.println("Error update classroom");
@@ -53,6 +56,8 @@ public class ClassDAOImpl implements ClassDAO {
         PreparedStatement stmt = connection.prepareStatement(query)) {
       stmt.setInt(1, ID);
       stmt.executeUpdate();
+
+      stmt.close();
       connection.close();
     } catch (SQLException e) {
       System.out.println("Error deleting classroom");
@@ -76,6 +81,7 @@ public class ClassDAOImpl implements ClassDAO {
         Student student = new Student(student_name, student_id, student_email);
         students.add(student);
       }
+      stmt.close();
       connection.close();
 
     } catch (SQLException e) {
@@ -101,12 +107,13 @@ public class ClassDAOImpl implements ClassDAO {
 
       if (result.next()) {
         Subject subject = new Subject(result.getString("s.id"), result.getString("s.name"));
-        Teacher teacher = new Teacher(result.getString("t.name"), result.getInt("t.id"));
+        Teacher teacher = new Teacher(result.getString("t.name"), result.getInt("t.id"), result.getInt("t.age"));
         List<Student> students = getStudentsForClass(ID, connection);
         return new Class(result.getString("c.name"),
             result.getInt("c.id"),
             subject, teacher, students);
       }
+      stmt.close();
       connection.close();
     } catch (SQLException e) {
       System.out.println("Error retrieving class");
@@ -121,24 +128,24 @@ public class ClassDAOImpl implements ClassDAO {
     String query = " Select c.name, c.id, t.name, s.name"
         + " from classes"
         + "join teachers t on c.teacher_id = t.id"
-        + "join subjects s on c.subject_id = s.id";
+        + "join subjects s on c.subject_id = s.id"
+        + "order by s.name ASC";
     try (Connection connection = Database.getConnection();
         PreparedStatement stmt = connection.prepareStatement(query)) {
       ResultSet result = stmt.executeQuery();
       while (result.next()) {
         Subject subject = new Subject(result.getString("s.id"), result.getString("s.name"));
-        Teacher teacher = new Teacher(result.getString("t.name"), result.getInt("t.id"));
+        Teacher teacher = new Teacher(result.getString("t.name"), result.getInt("t.id"), result.getInt("t.age"));
         classes.add(new Class(
             result.getString("name"),
             result.getInt("id"),
             subject, teacher));
       }
-
+      stmt.close(); 
       connection.close();
     } catch (SQLException e) {
       System.out.println("Error retrieving all classes");
     }
     return classes;
-
   }
 }
