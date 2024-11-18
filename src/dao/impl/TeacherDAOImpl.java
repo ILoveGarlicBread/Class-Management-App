@@ -21,8 +21,10 @@ public class TeacherDAOImpl implements TeacherDAO {
               result.getString("name"),
               result.getInt("id"),
               result.getString("email"),
-              result.getString("password"));
+              result.getString("password"),
+              result.getInt("age"));
         }
+        stmt.close(); 
         connection.close();
       }
     }
@@ -44,6 +46,8 @@ public class TeacherDAOImpl implements TeacherDAO {
       stmt.setString(3, teacher.getEmail());
       stmt.setString(4, teacher.getPassword());
       stmt.executeUpdate();
+
+      stmt.close(); 
       connection.close();
     } catch (SQLException e) {
       System.err.println("Error inserting teacher to database.");
@@ -60,6 +64,8 @@ public class TeacherDAOImpl implements TeacherDAO {
       stmt.setString(3, teacher.getEmail());
       stmt.setString(4, teacher.getPassword());
       stmt.executeUpdate();
+
+      stmt.close(); 
       connection.close();
 
     } catch (SQLException e) {
@@ -75,6 +81,8 @@ public class TeacherDAOImpl implements TeacherDAO {
         PreparedStatement stmt = connection.prepareStatement(query)) {
       stmt.setInt(1, teacher.getID());
       stmt.executeUpdate();
+
+      stmt.close(); 
       connection.close();
     } catch (SQLException e) {
       System.err.println("Error deleting teacher from database.");
