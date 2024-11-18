@@ -1,6 +1,6 @@
 package model;
 
-public class Teacher extends Person {
+public final class Teacher extends Person {
   private final int age;
   public Teacher() {
     this.age= 0;
