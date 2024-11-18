@@ -20,16 +20,16 @@ public class StudentService {
     return studentDAO.findByID(id);
   }
 
-  public void addStudent(Student student) {
-    studentDAO.insertStudent(student);
+  public boolean addStudent(Student student) {
+    return studentDAO.insertStudent(student);
   }
 
-  public void updateStudent(Student student) {
-    studentDAO.updateStudent(student);
+  public boolean updateStudent(Student student) {
+    return studentDAO.updateStudent(student);
   }
 
-  public void deleteStudent(Student student) {
-    studentDAO.deleteStudent(student);
+  public boolean deleteStudent(Student student) {
+    return studentDAO.deleteStudent(student);
   }
 
 }

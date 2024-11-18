@@ -22,11 +22,21 @@ public class StudentController {
     }
   }
 
-  public void insertStudentTable() {
+  public boolean insertStudentTable(String name, String email) {
+    Student student = new Student(name, email);
+    return studentService.addStudent(student);
+
   }
 
-  public void deleteStudentTable() {
+  public boolean deleteStudentTable(int ID) {
+    Student student = new Student(ID);
+    return studentService.deleteStudent(student);
 
+  }
+
+  public boolean updateStudentTable(String name, int ID, String email) {
+    Student student = new Student(name, ID, email);
+    return studentService.updateStudent(student);
   }
 
 }

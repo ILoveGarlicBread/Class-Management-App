@@ -370,11 +370,13 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="studentaddButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="studentsearchButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="studentnameTextField" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
-                          <Component id="studentemailTextField" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="studentaddButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="studentsearchButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="studentemailTextField" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -544,6 +546,9 @@
                 <Property name="text" type="java.lang.String" value="Delete Selected"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="studentdeleteButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="studentupdateButton">
               <Properties>
@@ -556,6 +561,9 @@
                 <Property name="text" type="java.lang.String" value="Update Selected"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="studentupdateButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="studentsearchButton">
               <Properties>

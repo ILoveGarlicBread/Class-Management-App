@@ -11,6 +11,7 @@ import view.roundedBorder;
 import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.UIManager;
 import controller.*;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -38,7 +39,18 @@ public class Main extends javax.swing.JFrame {
       StudentController studentcontroller = new StudentController();
       studentcontroller.loadStudentTable(studentTable);
   }
-  
+  public boolean insertStudentData(String name,String email){
+      StudentController studentcontroller = new StudentController();
+      return studentcontroller.insertStudentTable(name, email);
+  }  
+  public boolean deleteStudentData(int ID){
+      StudentController studentcontroller = new StudentController();
+      return studentcontroller.deleteStudentTable(ID);
+  }
+  public boolean updateStudentData(String name, int ID, String email){
+      StudentController studentcontroller = new StudentController();
+      return studentcontroller.updateStudentTable(name, ID, email);
+  }
 
   /**
    * This method is called from within the constructor to initialize the form.
@@ -325,11 +337,21 @@ public class Main extends javax.swing.JFrame {
         studentdeleteButton.setForeground(new java.awt.Color(229, 233, 240));
         studentdeleteButton.setText("Delete Selected");
         studentdeleteButton.setBorderPainted(false);
+        studentdeleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentdeleteButtonActionPerformed(evt);
+            }
+        });
 
         studentupdateButton.setBackground(new java.awt.Color(76, 86, 106));
         studentupdateButton.setForeground(new java.awt.Color(229, 233, 240));
         studentupdateButton.setText("Update Selected");
         studentupdateButton.setBorderPainted(false);
+        studentupdateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentupdateButtonActionPerformed(evt);
+            }
+        });
 
         studentsearchButton.setBackground(new java.awt.Color(76, 86, 106));
         studentsearchButton.setForeground(new java.awt.Color(229, 233, 240));
@@ -371,11 +393,12 @@ public class Main extends javax.swing.JFrame {
             studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(studentsPanelLayout.createSequentialGroup()
                 .addGap(64, 64, 64)
-                .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(studentaddButton)
-                    .addComponent(studentsearchButton)
+                .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(studentnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(studentemailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(studentaddButton)
+                        .addComponent(studentsearchButton)
+                        .addComponent(studentemailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(studentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -517,8 +540,68 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_studentsearchButtonActionPerformed
 
     private void studentaddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentaddButtonActionPerformed
-        // TODO add your handling code here:
+        String name = studentnameTextField.getText();
+        String email = studentemailTextField.getText();
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to add this student?","Confirm insert",JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+        if (confirm == JOptionPane.YES_OPTION){
+            boolean success = insertStudentData(name, email);
+            if(success){
+                JOptionPane.showMessageDialog(this, "Student added successfully.");
+                loadStudentData();
+            }
+            
+        } 
+        
     }//GEN-LAST:event_studentaddButtonActionPerformed
+
+    private void studentdeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentdeleteButtonActionPerformed
+        int selectedRow = studentTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a student to delete.");
+            return;
+        }
+        int studentId = (int) studentTable.getValueAt(selectedRow, 1);
+        int confirm = JOptionPane.showConfirmDialog(
+                null, 
+                "Are you sure you want to delete this student?", 
+                "Confirm Delete", 
+                JOptionPane.YES_NO_OPTION
+        );
+        if (confirm == JOptionPane.YES_OPTION){
+            boolean success = deleteStudentData(studentId);
+            if(success){
+                JOptionPane.showMessageDialog(null, "Student deleted successfully.");
+                loadStudentData();
+            }
+            
+        }
+    }//GEN-LAST:event_studentdeleteButtonActionPerformed
+
+    private void studentupdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentupdateButtonActionPerformed
+        int selectedRow = studentTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a student to update.");
+            return;
+        }
+        String studentName = (String) studentTable.getValueAt(selectedRow, 0);
+        int studentId = (int) studentTable.getValueAt(selectedRow, 1);
+        String studentEmail = (String) studentTable.getValueAt(selectedRow, 2);
+        int confirm = JOptionPane.showConfirmDialog(
+                null, 
+                "Are you sure you want to update this student info?", 
+                "Confirm Update", 
+                JOptionPane.YES_NO_OPTION
+        );
+        if (confirm == JOptionPane.YES_OPTION){
+            boolean success = updateStudentData(studentName,studentId,studentEmail);
+            if(success){
+                JOptionPane.showMessageDialog(null, "Student update successfully.");
+                loadStudentData();
+            }
+            
+        }
+    }//GEN-LAST:event_studentupdateButtonActionPerformed
 
     private void studentButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_studentButtonActionPerformed
         mainPanel.setSelectedIndex(1);

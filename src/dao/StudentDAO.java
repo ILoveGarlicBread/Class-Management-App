@@ -8,9 +8,9 @@ public interface StudentDAO {
 
   Student findByID(String id);
 
-  void insertStudent(Student student);
+  boolean insertStudent(Student student);
 
-  void updateStudent(Student student);
+  boolean updateStudent(Student student);
 
-  void deleteStudent(Student student);
+  boolean deleteStudent(Student student);
 }
