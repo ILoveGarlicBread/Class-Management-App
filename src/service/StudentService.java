@@ -2,13 +2,14 @@ package service;
 
 import dao.StudentDAO;
 import model.Student;
+import dao.impl.StudentDAOImpl;
 import java.util.List;
 
 public class StudentService {
   private StudentDAO studentDAO;
 
-  public StudentService(StudentDAO studentDAO) {
-    this.studentDAO = studentDAO;
+  public StudentService() {
+    studentDAO = new StudentDAOImpl();
   }
 
   public List<Student> listAll() {
@@ -19,16 +20,16 @@ public class StudentService {
     return studentDAO.findByID(id);
   }
 
-  public void addStudent(Student student) {
-    studentDAO.insertStudent(student);
+  public boolean addStudent(Student student) {
+    return studentDAO.insertStudent(student);
   }
 
-  public void updateStudent(Student student) {
-    studentDAO.updateStudent(student);
+  public boolean updateStudent(Student student) {
+    return studentDAO.updateStudent(student);
   }
 
-  public void deleteStudent(Student student) {
-    studentDAO.deleteStudent(student);
+  public boolean deleteStudent(Student student) {
+    return studentDAO.deleteStudent(student);
   }
 
 }

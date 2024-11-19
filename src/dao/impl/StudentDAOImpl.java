@@ -13,7 +13,7 @@ public class StudentDAOImpl implements StudentDAO {
   @Override
   public List<Student> listAllStudents() {
     List<Student> students = new ArrayList<>();
-    String query = "SELECT * FROM students";
+    String query = "SELECT name, id, email FROM students order by name";
     try (Connection connection = Database.getConnection();
 
         PreparedStatement stmt = connection.prepareStatement(query);
@@ -58,40 +58,42 @@ public class StudentDAOImpl implements StudentDAO {
   }
 
   @Override
-  public void insertStudent(Student student) {
-    String query = "INSERT INTO students (name, id, email) values(?,?,?)";
+  public boolean insertStudent(Student student) {
+    String query = "INSERT INTO students (name, email) values(?,?)";
     try (Connection connection = Database.getConnection();
 
         PreparedStatement stmt = connection.prepareStatement(query)) {
       stmt.setString(1, student.getName());
-      stmt.setInt(2, student.getID());
-      stmt.setString(3, student.getEmail());
+      stmt.setString(2, student.getEmail());
       stmt.executeUpdate();
       connection.close();
     } catch (SQLException e) {
-      System.err.println("Error inserting student to database.");
+      System.err.println("Error inserting student to database." + e.getMessage());
+      return false;
     }
+    return true;
   }
 
   @Override
-  public void updateStudent(Student student) {
-    String query = "UPDATE students SET name = ?, id = ?, email = ? WHERE id = ?";
+  public boolean updateStudent(Student student) {
+    String query = "UPDATE students SET name = ?, email = ? WHERE id = ?";
     try (Connection connection = Database.getConnection();
 
         PreparedStatement stmt = connection.prepareStatement(query)) {
       stmt.setString(1, student.getName());
-      stmt.setInt(2, student.getID());
-      stmt.setString(3, student.getEmail());
-      stmt.setInt(4, student.getID());
+      stmt.setString(2, student.getEmail());
+      stmt.setInt(3, student.getID());
       stmt.executeUpdate();
       connection.close();
     } catch (SQLException e) {
-      System.err.println("Errer updating student in database.");
+      System.err.println("Error updating student in database." + e.getMessage());
+      return false;
     }
+    return true;
   }
 
   @Override
-  public void deleteStudent(Student student) {
+  public boolean deleteStudent(Student student) {
     String query = "DELETE FROM students where id = ?";
     try (Connection connection = Database.getConnection();
 
@@ -100,7 +102,9 @@ public class StudentDAOImpl implements StudentDAO {
       stmt.executeUpdate();
       connection.close();
     } catch (SQLException e) {
-      System.err.println("Error deleting student from database.");
+      System.err.println("Error deleting student from database." + e.getMessage());
+      return false;
     }
+    return true;
   }
 }

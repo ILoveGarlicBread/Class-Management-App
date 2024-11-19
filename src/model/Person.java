@@ -15,7 +15,16 @@ public class Person {
     this.password = password;
     this.ID = ID;
   };
-
+  public void viewInfo(){
+    System.out.println("Name: " + getName());
+    System.out.println("Name: " + getEmail());
+  }
+  public void updateInfo(String name, String email, String password, int ID){
+    this.name= name;
+    this.email= email;
+    this.password= password;
+    this.ID= ID;
+  }
   public void setName(String name) {
     this.name = name;
   }

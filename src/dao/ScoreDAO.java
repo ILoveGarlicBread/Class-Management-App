@@ -6,11 +6,11 @@ import model.Score;
 public interface ScoreDAO {
   List<Score> listAllScore();
 
-  Score findByID(String id);
+  // Score findByID(String id);
 
   void addScore(Score score);
 
   void updateScore(Score score);
 
-  void deleteScore(String id);
+  void deleteScore(int id);
 }
