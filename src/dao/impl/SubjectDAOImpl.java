@@ -9,10 +9,27 @@ import model.Student;
 import model.Subject;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import java.sql.*;
 
 public class SubjectDAOImpl implements SubjectDAO {
+  @Override
+  public Optional<Subject> findByName(String Name) {
+    String query = "Select name, id from subjects where name = ?";
+    try (Connection connection = Database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(query);) {
+      stmt.setString(1, Name);
+      ResultSet result = stmt.executeQuery();
+      if (result.next()) {
+        return Optional.of(new Subject(result.getString("id"), result.getString("name")));
+      }
+    } catch (SQLException e) {
+      System.out.println("Error finding subject by name");
+    }
+    return Optional.empty();
+  }
+
   @Override
   public void addSubject(Subject subject) {
     String query = "INSERT INTO subjects(id,name)values(?,?)";
@@ -21,13 +38,14 @@ public class SubjectDAOImpl implements SubjectDAO {
       stmt.setString(1, subject.getID());
       stmt.setString(2, subject.getName());
       stmt.executeUpdate();
-      
+
       stmt.close();
       connection.close();
     } catch (SQLException e) {
       System.out.println("Error insert subject");
     }
   }
+
   @Override
   public void updateSubject(Subject subject) {
     String query = "Update classes set id = ?, name=? where id=?";
@@ -44,6 +62,7 @@ public class SubjectDAOImpl implements SubjectDAO {
       System.out.println("Error update subject");
     }
   }
+
   @Override
   public void deleteSubject(String id) {
     String query = "Delete from classes where id = ?";
@@ -58,12 +77,13 @@ public class SubjectDAOImpl implements SubjectDAO {
       System.out.println("Error deleting subject");
     }
   }
+
   @Override
   public List<Subject> listAllSubjects() {
     List<Subject> subjects = new ArrayList<>();
     String query = " Select id, name"
-        + " from subjects"
-        + "order by name ASC"; 
+        + " from subjects "
+        + "order by name ";
     try (Connection connection = Database.getConnection();
         PreparedStatement stmt = connection.prepareStatement(query)) {
       ResultSet result = stmt.executeQuery();
@@ -79,6 +99,7 @@ public class SubjectDAOImpl implements SubjectDAO {
     }
     return subjects;
   }
+
   @Override
   public Subject findByID(String id) {
     String query = "SELECT * FROM subjects WHERE id = ?";

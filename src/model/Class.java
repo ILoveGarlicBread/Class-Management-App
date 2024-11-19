@@ -12,6 +12,12 @@ public class Class {
   public Class() {
   }
 
+  public Class(String name, Subject subject, Teacher teacher) {
+    this.className = name;
+    this.subject = subject;
+    this.teacher = teacher;
+  }
+
   public Class(String name, int ID, Subject subject, Teacher teacher) {
     this.className = name;
     this.classID = ID;
@@ -35,12 +41,12 @@ public class Class {
     return classID;
   }
 
-  public String getSubject() {
-    return subject.getID();
+  public Subject getSubject() {
+    return subject;
   }
 
-  public int getTeacher() {
-    return teacher.ID;
+  public Teacher getTeacher() {
+    return teacher;
   }
 
   public List<Student> getStudents() {

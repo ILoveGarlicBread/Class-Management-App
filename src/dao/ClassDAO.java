@@ -4,11 +4,11 @@ import model.Class;
 import java.util.List;
 
 public interface ClassDAO {
-  void insertClass(Class classroom);
+  boolean insertClass(Class classroom);
 
-  void updateClass(Class classroom);
+  boolean updateClass(Class classroom);
 
-  void deleteClass(int id);
+  boolean deleteClass(int id);
 
   Class findByID(int id);
 
