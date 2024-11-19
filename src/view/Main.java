@@ -40,6 +40,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     String operation = "default";
+    int studentsInCurrentClassID;
     LocalDate dateObj = LocalDate.now();
     DateTimeFormatter dayFormat = DateTimeFormatter.ofPattern("dd");
     DateTimeFormatter monthFormat = DateTimeFormatter.ofPattern("MMM");
@@ -52,10 +53,7 @@ public class Main extends javax.swing.JFrame {
         return dateObj.format(monthFormat);
     }
 
-    public void loadStudentData() {
-        StudentController studentcontroller = new StudentController();
-        studentcontroller.loadStudentTable(studentTable);
-    }
+    
 
     public boolean insertStudentData(String name, String email) {
         StudentController studentcontroller = new StudentController();
@@ -65,19 +63,27 @@ public class Main extends javax.swing.JFrame {
         ClassController classcontroller = new ClassController(); 
         return classcontroller.insertClassTable(className, subjectName, teacherName);
     }
+    public boolean insertStudentInClassData(int classID, int studentID){
+        ClassController classcontroller = new ClassController();
+        return classcontroller.insertStudentInClassTable(classID, studentID);
+    }
 
     public boolean deleteStudentData(int ID) {
         StudentController studentcontroller = new StudentController();
         return studentcontroller.deleteStudentTable(ID);
+    }
+    public boolean deleteClassData(int ID){
+        ClassController classcontroller = new ClassController();
+        return classcontroller.deleteClassTable(ID);
     }
 
     public boolean updateStudentData(String name, int ID, String email) {
         StudentController studentcontroller = new StudentController();
         return studentcontroller.updateStudentTable(name, ID, email);
     }
-    public boolean updateClassData(String className, String subjectName, String teacherName){
+    public boolean updateClassData(String className, int id, String subjectName, String teacherName){
         ClassController classcontroller = new ClassController();
-        return classcontroller.updateClassTable(className, subjectName, teacherName);
+        return classcontroller.updateClassTable(className, id, subjectName, teacherName);
     }
 
     public void loadClassesData() {
@@ -92,6 +98,14 @@ public class Main extends javax.swing.JFrame {
     public void loadTeacherData(){
         TeacherController teachercontroller = new TeacherController();
         teachercontroller.loadTeacherComboBox(teacherComboBox);
+    }
+    public void loadStudentData() {
+        StudentController studentcontroller = new StudentController();
+        studentcontroller.loadStudentTable(studentTable);
+    }
+    public void loadStudentsInClass(int id){
+        ClassController classcontroller = new ClassController();
+        classcontroller.loadStudentInClassTable(studentclassTable, id);
     }
      /**
      * This method is called from within the constructor to initialize the form.
@@ -148,11 +162,24 @@ public class Main extends javax.swing.JFrame {
         classnameLabel = new javax.swing.JLabel();
         subjectLabel = new javax.swing.JLabel();
         teacherLabel = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        classopenButton = new javax.swing.JButton();
         reportPanel = new javax.swing.JPanel();
         accountPanel = new javax.swing.JPanel();
         settingPanel = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        studentclassPanel = new javax.swing.JPanel();
+        studentclassScrollPane = new javax.swing.JScrollPane();
+        studentclassTable = new javax.swing.JTable();
+        studentIDTextField = new javax.swing.JTextField();
+        studentclassrefreshButton = new javax.swing.JButton();
+        StudentIDLabel = new javax.swing.JLabel();
+        addStudentButton = new javax.swing.JButton();
+        removeStudentButton = new javax.swing.JButton();
+        studentclassconfirmPanel = new javax.swing.JPanel();
+        studentclassConfirmButton = new javax.swing.JButton();
+        studentclasscancelButton = new javax.swing.JButton();
+        classIDTextField = new javax.swing.JTextField();
+        searchClassButton = new javax.swing.JButton();
+        classIDLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 255));
@@ -329,8 +356,6 @@ public class Main extends javax.swing.JFrame {
         studentTable.setGridColor(new java.awt.Color(229, 233, 240));
         studentTable.getTableHeader().setBackground(new java.awt.Color(76, 86, 106));
         studentTable.getTableHeader().setForeground(new java.awt.Color(229, 233, 240));
-
-        studentTable.setGridColor(new java.awt.Color(229, 233, 240));
         studentTable.setSelectionBackground(new java.awt.Color(229, 233, 240));
         studentTable.setSelectionForeground(new java.awt.Color(46, 52, 64));
         studentTable.setShowGrid(true);
@@ -519,6 +544,11 @@ public class Main extends javax.swing.JFrame {
         classesrefreshButton.setForeground(new java.awt.Color(229, 233, 240));
         classesrefreshButton.setText("Refresh");
         classesrefreshButton.setBorderPainted(false);
+        classesrefreshButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                classesrefreshButtonActionPerformed(evt);
+            }
+        });
 
         classnameTextField.setBackground(new java.awt.Color(67, 76, 94));
         classnameTextField.setForeground(new java.awt.Color(229, 233, 240));
@@ -614,6 +644,8 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(classcancelButton)))
         );
 
+        classesTableScrollPane.setForeground(new java.awt.Color(229, 233, 240));
+
         classesTable.setBackground(new java.awt.Color(59, 66, 82));
         classesTable.setForeground(new java.awt.Color(229, 233, 240));
         classesTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -631,7 +663,7 @@ public class Main extends javax.swing.JFrame {
                 java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, true, true
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -668,10 +700,15 @@ public class Main extends javax.swing.JFrame {
         teacherLabel.setForeground(new java.awt.Color(229, 233, 240));
         teacherLabel.setText("Lecturer:");
 
-        jButton1.setBackground(new java.awt.Color(76, 86, 106));
-        jButton1.setForeground(new java.awt.Color(229, 233, 240));
-        jButton1.setText("Open");
-        jButton1.setBorderPainted(false);
+        classopenButton.setBackground(new java.awt.Color(76, 86, 106));
+        classopenButton.setForeground(new java.awt.Color(229, 233, 240));
+        classopenButton.setText("Open");
+        classopenButton.setBorderPainted(false);
+        classopenButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                classopenButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout classesPanelLayout = new javax.swing.GroupLayout(classesPanel);
         classesPanel.setLayout(classesPanelLayout);
@@ -710,7 +747,7 @@ public class Main extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(classdeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton1)))
+                                .addComponent(classopenButton)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
@@ -735,7 +772,7 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(classesrefreshButton)
                         .addComponent(classupdateButton)
                         .addComponent(classdeleteButton)
-                        .addComponent(jButton1))
+                        .addComponent(classopenButton))
                     .addComponent(classconfirmPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(classesTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -789,18 +826,197 @@ public class Main extends javax.swing.JFrame {
 
         mainPanel.addTab("tab7", settingPanel);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1060, Short.MAX_VALUE)
+        studentclassPanel.setBackground(new java.awt.Color(59, 66, 82));
+
+        studentclassTable.setBackground(new java.awt.Color(59, 66, 82));
+        studentclassTable.setForeground(new java.awt.Color(229, 233, 240));
+        studentclassTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Name", "ID", "Email"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        studentclassTable.setFocusable(false);
+        studentclassTable.setGridColor(new java.awt.Color(229, 233, 240));
+        studentclassTable.getTableHeader().setBackground(new java.awt.Color(76, 86, 106));
+        studentclassTable.getTableHeader().setForeground(new java.awt.Color(229, 233, 240));
+        studentclassTable.setGridColor(new java.awt.Color(46,52,64));
+        studentclassTable.setSelectionBackground(new java.awt.Color(229, 233, 240));
+        studentclassTable.setSelectionForeground(new java.awt.Color(46, 52, 64));
+        studentclassTable.setShowGrid(true);
+        studentclassScrollPane.setViewportView(studentclassTable);
+
+        studentIDTextField.setBackground(new java.awt.Color(67, 76, 94));
+        studentIDTextField.setForeground(new java.awt.Color(229, 233, 240));
+        studentIDTextField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(67, 76, 94), 3, true));
+        studentIDTextField.setCaretColor(new java.awt.Color(229, 233, 240));
+        studentIDTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentIDTextFieldActionPerformed(evt);
+            }
+        });
+
+        studentclassrefreshButton.setBackground(new java.awt.Color(76, 86, 106));
+        studentclassrefreshButton.setForeground(new java.awt.Color(229, 233, 240));
+        studentclassrefreshButton.setText("Refresh");
+        studentclassrefreshButton.setBorderPainted(false);
+        studentclassrefreshButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentclassrefreshButtonActionPerformed(evt);
+            }
+        });
+
+        StudentIDLabel.setBackground(new java.awt.Color(76, 86, 106));
+        StudentIDLabel.setForeground(new java.awt.Color(229, 233, 240));
+        StudentIDLabel.setText("Student ID");
+
+        addStudentButton.setBackground(new java.awt.Color(76, 86, 106));
+        addStudentButton.setForeground(new java.awt.Color(229, 233, 240));
+        addStudentButton.setText("Add Student");
+        addStudentButton.setBorderPainted(false);
+        addStudentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addStudentButtonActionPerformed(evt);
+            }
+        });
+
+        removeStudentButton.setBackground(new java.awt.Color(76, 86, 106));
+        removeStudentButton.setForeground(new java.awt.Color(229, 233, 240));
+        removeStudentButton.setText("Remove Student");
+        removeStudentButton.setBorderPainted(false);
+
+        studentclassconfirmPanel.setBackground(new java.awt.Color(59, 66, 82));
+
+        studentclassConfirmButton.setBackground(new java.awt.Color(94, 129, 172));
+        studentclassConfirmButton.setForeground(new java.awt.Color(229, 233, 240));
+        studentclassConfirmButton.setText("Confirm");
+        studentclassConfirmButton.setBorderPainted(false);
+        studentclassConfirmButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentclassConfirmButtonActionPerformed(evt);
+            }
+        });
+
+        studentclasscancelButton.setBackground(new java.awt.Color(76, 86, 106));
+        studentclasscancelButton.setForeground(new java.awt.Color(229, 233, 240));
+        studentclasscancelButton.setText("Cancel");
+        studentclasscancelButton.setBorderPainted(false);
+        studentclasscancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentclasscancelButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout studentclassconfirmPanelLayout = new javax.swing.GroupLayout(studentclassconfirmPanel);
+        studentclassconfirmPanel.setLayout(studentclassconfirmPanelLayout);
+        studentclassconfirmPanelLayout.setHorizontalGroup(
+            studentclassconfirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(studentclassconfirmPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(studentclassConfirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(studentclasscancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 886, Short.MAX_VALUE)
+        studentclassconfirmPanelLayout.setVerticalGroup(
+            studentclassconfirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, studentclassconfirmPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(studentclassconfirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(studentclassConfirmButton)
+                    .addComponent(studentclasscancelButton)))
         );
 
-        mainPanel.addTab("tab7", jPanel1);
+        classIDTextField.setBackground(new java.awt.Color(67, 76, 94));
+        classIDTextField.setForeground(new java.awt.Color(229, 233, 240));
+        classIDTextField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(67, 76, 94), 3, true));
+        classIDTextField.setCaretColor(new java.awt.Color(229, 233, 240));
+
+        searchClassButton.setBackground(new java.awt.Color(76, 86, 106));
+        searchClassButton.setForeground(new java.awt.Color(229, 233, 240));
+        searchClassButton.setText("Search Class");
+        searchClassButton.setBorderPainted(false);
+        searchClassButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchClassButtonActionPerformed(evt);
+            }
+        });
+
+        classIDLabel.setBackground(new java.awt.Color(76, 86, 106));
+        classIDLabel.setForeground(new java.awt.Color(229, 233, 240));
+        classIDLabel.setText("Class ID");
+
+        javax.swing.GroupLayout studentclassPanelLayout = new javax.swing.GroupLayout(studentclassPanel);
+        studentclassPanel.setLayout(studentclassPanelLayout);
+        studentclassPanelLayout.setHorizontalGroup(
+            studentclassPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(studentclassPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(studentclassPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(studentclassScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(StudentIDLabel)
+                    .addGroup(studentclassPanelLayout.createSequentialGroup()
+                        .addGroup(studentclassPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(studentclassPanelLayout.createSequentialGroup()
+                                .addComponent(studentclassrefreshButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(removeStudentButton))
+                            .addGroup(studentclassPanelLayout.createSequentialGroup()
+                                .addComponent(studentIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(addStudentButton)))
+                        .addGap(265, 265, 265)
+                        .addGroup(studentclassPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(studentclassconfirmPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, studentclassPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(classIDLabel)
+                                .addGroup(studentclassPanelLayout.createSequentialGroup()
+                                    .addComponent(classIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(searchClassButton))))))
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+        studentclassPanelLayout.setVerticalGroup(
+            studentclassPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, studentclassPanelLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(studentclassPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(StudentIDLabel)
+                    .addComponent(classIDLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(studentclassPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(studentIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(classIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchClassButton)
+                    .addComponent(addStudentButton))
+                .addGap(18, 18, 18)
+                .addGroup(studentclassPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(studentclassPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(studentclassrefreshButton)
+                        .addComponent(removeStudentButton))
+                    .addComponent(studentclassconfirmPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(studentclassScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(171, Short.MAX_VALUE))
+        );
+
+        mainPanel.addTab("tab7", studentclassPanel);
 
         getContentPane().add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, -62, 1060, 930));
 
@@ -969,8 +1185,9 @@ public class Main extends javax.swing.JFrame {
             }
             String className = classnameTextField.getText();
             String teacherName = (String) teacherComboBox.getSelectedItem();
+            int classId = (int) classesTable.getValueAt(classesTable.getSelectedRow(), 1);
             String subjectName = (String) subjectComboBox.getSelectedItem();
-            boolean success = updateClassData(className, subjectName, teacherName);
+            boolean success = updateClassData(className, classId, subjectName, teacherName);
             if (success) {
                 loadClassesData();
             }
@@ -979,20 +1196,33 @@ public class Main extends javax.swing.JFrame {
 
         }
         if (operation == "classdelete") {
-
-            operation = "default";
+            int selectedRow = classesTable.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(null, "Please select a class to delete.");
+                return;
+            }
+            int classId = (int) classesTable.getValueAt(selectedRow, 1);
+            boolean success = deleteClassData(classId);
+            if (success) {
+                loadClassesData();
+            }
+             operation = "default";
             classconfirmPanel.setVisible(false);
         }
+       
         operation = "default";
         classconfirmPanel.setVisible(false);
     }//GEN-LAST:event_classConfirmButtonActionPerformed
 
     private void classdeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classdeleteButtonActionPerformed
+        operation = "classdelete";
         classconfirmPanel.setVisible(true);
+        
     }//GEN-LAST:event_classdeleteButtonActionPerformed
 
     private void classupdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classupdateButtonActionPerformed
         classconfirmPanel.setVisible(true);
+        operation = "classupdate";
     }//GEN-LAST:event_classupdateButtonActionPerformed
 
     private void classinsertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classinsertButtonActionPerformed
@@ -1008,6 +1238,53 @@ public class Main extends javax.swing.JFrame {
     private void subjectComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectComboBoxActionPerformed
 
     }//GEN-LAST:event_subjectComboBoxActionPerformed
+
+    private void classesrefreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classesrefreshButtonActionPerformed
+        loadClassesData();
+    }//GEN-LAST:event_classesrefreshButtonActionPerformed
+
+    private void classopenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classopenButtonActionPerformed
+        int selectedRow = classesTable.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(null, "Please select a class to view.");
+                return;
+            }
+            int classId = (int) classesTable.getValueAt(classesTable.getSelectedRow(), 1);
+        loadStudentsInClass(classId);
+        studentsInCurrentClassID = classId;
+        studentclassconfirmPanel.setVisible(false);
+        mainPanel.setSelectedIndex(5);
+    }//GEN-LAST:event_classopenButtonActionPerformed
+
+    private void studentIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentIDTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_studentIDTextFieldActionPerformed
+
+    private void studentclassConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentclassConfirmButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_studentclassConfirmButtonActionPerformed
+
+    private void studentclasscancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentclasscancelButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_studentclasscancelButtonActionPerformed
+
+    private void addStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentButtonActionPerformed
+        int studentID = Integer.parseInt(studentIDTextField.getText());
+        insertStudentInClassData(studentsInCurrentClassID,studentID);
+        loadStudentsInClass(studentsInCurrentClassID);
+        
+        
+    }//GEN-LAST:event_addStudentButtonActionPerformed
+
+    private void searchClassButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchClassButtonActionPerformed
+        int classId = Integer.parseInt(classIDTextField.getText());
+        loadStudentsInClass(classId);
+        studentsInCurrentClassID = classId;
+    }//GEN-LAST:event_searchClassButtonActionPerformed
+
+    private void studentclassrefreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentclassrefreshButtonActionPerformed
+        loadStudentsInClass(studentsInCurrentClassID);
+    }//GEN-LAST:event_studentclassrefreshButtonActionPerformed
 
     private void studentButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_studentButtonActionPerformed
         confirmPanel.setVisible(false);
@@ -1055,9 +1332,13 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel StudentIDLabel;
     private javax.swing.JButton accountButton;
     private javax.swing.JPanel accountPanel;
+    private javax.swing.JButton addStudentButton;
     private javax.swing.JButton classConfirmButton;
+    private javax.swing.JLabel classIDLabel;
+    private javax.swing.JTextField classIDTextField;
     private javax.swing.JButton classcancelButton;
     private javax.swing.JPanel classconfirmPanel;
     private javax.swing.JButton classdeleteButton;
@@ -1069,26 +1350,35 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton classinsertButton;
     private javax.swing.JLabel classnameLabel;
     private javax.swing.JTextField classnameTextField;
+    private javax.swing.JButton classopenButton;
     private javax.swing.JButton classsearchButton;
     private javax.swing.JButton classupdateButton;
     private javax.swing.JPanel confirmPanel;
     private javax.swing.JPanel datePanel;
     private javax.swing.JLabel dayLabel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JTabbedPane mainPanel;
     private javax.swing.JLabel monthLabel;
+    private javax.swing.JButton removeStudentButton;
     private javax.swing.JButton reportButton;
     private javax.swing.JPanel reportPanel;
+    private javax.swing.JButton searchClassButton;
     private javax.swing.JPanel settingPanel;
     private javax.swing.JButton settingsButton;
     private javax.swing.JPanel sidePanel;
     private javax.swing.JButton studentButton;
     private javax.swing.JButton studentConfirmButton;
+    private javax.swing.JTextField studentIDTextField;
     private javax.swing.JTable studentTable;
     private javax.swing.JScrollPane studentTableScrollPane;
     private javax.swing.JButton studentaddButton;
     private javax.swing.JButton studentcancelButton;
+    private javax.swing.JButton studentclassConfirmButton;
+    private javax.swing.JPanel studentclassPanel;
+    private javax.swing.JScrollPane studentclassScrollPane;
+    private javax.swing.JTable studentclassTable;
+    private javax.swing.JButton studentclasscancelButton;
+    private javax.swing.JPanel studentclassconfirmPanel;
+    private javax.swing.JButton studentclassrefreshButton;
     private javax.swing.JButton studentdeleteButton;
     private javax.swing.JLabel studentemailLabel;
     private javax.swing.JTextField studentemailTextField;

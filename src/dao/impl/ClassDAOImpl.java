@@ -13,6 +13,38 @@ import java.sql.*;
 
 public class ClassDAOImpl implements ClassDAO {
   @Override
+  public boolean insertStudentInClass(int classID, int studentID) {
+    String query = "Insert into class_students (class_id, student_id) values (?,?)";
+    try (Connection connection = Database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(query)) {
+      stmt.setInt(1, classID);
+      stmt.setInt(2, studentID);
+      stmt.executeUpdate();
+      stmt.close();
+      connection.close();
+      return true;
+
+    } catch (SQLException e) {
+      System.err.println("Error insert student in class: " + e.getMessage());
+      System.err.println("Current class ID: ");
+      System.err.println(classID);
+    }
+    return false;
+
+  }
+
+  @Override
+  public List<Student> listStudentsInClass(int id) {
+    try (Connection connection = Database.getConnection()) {
+      return getStudentsForClass(id, connection);
+    } catch (SQLException e) {
+      System.err.println("Error getting list of students");
+    }
+    return null;
+
+  }
+
+  @Override
   public boolean insertClass(Class classroom) {
     String query = "INSERT INTO classes (name,subject_id,teacher_id) values (?,?,?)";
     String findSubjectIdQuery = "SELECT id FROM subjects WHERE name = ?";
@@ -61,7 +93,7 @@ public class ClassDAOImpl implements ClassDAO {
 
   @Override
   public boolean updateClass(Class classroom) {
-    String query = "Update classes set name=?,subject_id=?,teacher_id=? where id =?";
+    String query = "Update classes set name = ?,subject_id= ? ,teacher_id = ? where id =?";
     try (Connection connection = Database.getConnection();
         PreparedStatement stmt = connection.prepareStatement(query)) {
       stmt.setString(1, classroom.getName());
@@ -69,7 +101,7 @@ public class ClassDAOImpl implements ClassDAO {
       stmt.setInt(3, classroom.getTeacher().getID());
       stmt.setInt(4, classroom.getID());
       stmt.executeUpdate();
-
+      System.out.println("Success update");
       stmt.close();
       connection.close();
       return true;
@@ -86,7 +118,6 @@ public class ClassDAOImpl implements ClassDAO {
         PreparedStatement stmt = connection.prepareStatement(query)) {
       stmt.setInt(1, ID);
       stmt.executeUpdate();
-
       stmt.close();
       connection.close();
       return true;
@@ -98,19 +129,19 @@ public class ClassDAOImpl implements ClassDAO {
 
   private List<Student> getStudentsForClass(int ID, Connection connection) {
     List<Student> students = new ArrayList<>();
-    String query = "Select s.name, s.id, s.email"
-        + "From class_student cs"
-        + "Join students s on cs.student_id = s.id"
-        + "where cs.class_id = ?"
+    String query = "Select s.name as student_name, s.id as student_id, s.email as student_email "
+        + "From class_students cs "
+        + "Join students s on cs.student_id = s.id "
+        + "where cs.class_id = ? "
         + "order by s.name";
     try (
         PreparedStatement stmt = connection.prepareStatement(query)) {
       stmt.setInt(1, ID);
       ResultSet result = stmt.executeQuery();
       while (result.next()) {
-        String student_name = result.getString("s.name");
-        int student_id = result.getInt("s.id");
-        String student_email = result.getString("s.email");
+        String student_name = result.getString("student_name");
+        int student_id = result.getInt("student_id");
+        String student_email = result.getString("student_email");
         Student student = new Student(student_name, student_id, student_email);
         students.add(student);
       }
@@ -118,7 +149,7 @@ public class ClassDAOImpl implements ClassDAO {
       connection.close();
 
     } catch (SQLException e) {
-      System.out.println("Error retrieving student for Class");
+      System.out.println("Error retrieving student for Class" + e.getMessage());
     }
     return students;
 

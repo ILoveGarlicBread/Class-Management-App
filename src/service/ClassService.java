@@ -10,6 +10,7 @@ import dao.impl.TeacherDAOImpl;
 import model.Class;
 import model.Subject;
 import model.Teacher;
+import model.Student;
 import java.util.List;
 
 public class ClassService {
@@ -26,6 +27,14 @@ public class ClassService {
 
   public List<Class> listAll() {
     return classDAO.listAllClass();
+  }
+
+  public boolean insertStudentInClass(int classID, int studentID) {
+    return classDAO.insertStudentInClass(classID, studentID);
+  }
+
+  public List<Student> listStudentsInClass(int id) {
+    return classDAO.listStudentsInClass(id);
   }
 
   public Class findByID(int id) {
